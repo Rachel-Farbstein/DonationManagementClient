@@ -1,0 +1,37 @@
+.donor-container {
+    width: 80%;
+    top: 70px;
+}
+
+p-fieldset {
+    margin: auto;
+    justify-items: center;
+    direction: rtl;
+}
+
+.rigth-buttons {
+    display: inline;
+    width: fit-content;
+    float: right;
+    position: relative;
+}
+
+.left-buttons {
+    display: inline;
+    width: fit-content;
+    float: left;
+    position: relative;
+}
+
+.th-columName {
+    text-align: right;
+    width: fit-content;
+}
+
+.p-paginator .p-dropdown .p-dropdown-label {
+    padding-right: 20% !important;
+}
+
+p-table div p-paginator div p-dropdown div span {
+    padding-right: 20% !important;
+}

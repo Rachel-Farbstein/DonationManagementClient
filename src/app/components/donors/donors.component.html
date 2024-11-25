@@ -1,0 +1,65 @@
+<p-toast />
+<p-fieldset legend="פרטי תורמים">
+    <div class="mb-3">
+        <span>
+            <p-button type="button" icon="pi pi-chevron-left" (onClick)="prev()" [disabled]="isFirstPage()"
+                styleClass="p-button-text" />
+            <p-button type="button" icon="pi pi-refresh" (onClick)="reset()" styleClass="p-button-text" />
+            <p-button type="button" icon="pi pi-chevron-right" (onClick)="next()" [disabled]="isLastPage()"
+                styleClass="p-button-text" />
+        </span>
+        <span class="left-buttons">
+            <p-button type="button" icon="pi pi-user-plus" (onClick)="openNew()" styleClass="p-button-text" />
+        </span>
+    </div>
+    <p-table [value]="donorList" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped"
+        [paginator]="true" [rows]="5" [resizableColumns]="true" columnResizeMode="expand" sortField="fullName"
+        [sortOrder]="1" selectionMode="multiple" [(selection)]="selectedDonors" [metaKeySelection]="metaKey"
+        dataKey="id" [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true"
+        scrollHeight="80%" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="th-columName">
+                    <p-tableHeaderCheckbox />
+                </th>
+                <th style="display: none">תז</th>
+                <th pSortableColumn="fullName" class="th-columName">
+                    שם
+                    <p-sortIcon field="fullName" />
+                    <p-columnFilter type="text" field="fullName" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th pSortableColumn="email" class="th-columName">
+                    מייל
+                    <p-sortIcon field="email" />
+                    <p-columnFilter type="text" field="email" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th pSortableColumn="address" class="th-columName">
+                    כתובת
+                    <p-sortIcon field="address" />
+                    <p-columnFilter type="text" field="address" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th pSortableColumn="phone" class="th-columName">
+                    טלפון
+                    <p-sortIcon field="phone" />
+                    <p-columnFilter type="text" field="phone" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-donor>
+            <tr>
+                <td class="th-columName">
+                    <p-tableCheckbox [value]="donor" />
+                </td>
+                <td style="display: none">{{ donor.id }}</td>
+                <td class="th-columName">{{ donor.fullName }}</td>
+                <td class="th-columName">{{ donor.email }}</td>
+                <td class="th-columName">{{ donor.address }}</td>
+                <td class="th-columName">{{ donor.phone }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-fieldset>
