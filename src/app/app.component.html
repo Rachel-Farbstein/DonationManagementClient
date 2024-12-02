@@ -1,6 +1,28 @@
-<app-header-bar></app-header-bar>
-<app-side-menu></app-side-menu>
-<div class="body-container">
-    <!-- <app-donors></app-donors> -->
+<!-- <app-header-bar></app-header-bar>
+<app-side-menu></app-side-menu> -->
+<!-- <div class="body-container">
     <router-outlet></router-outlet>
+</div> -->
+
+<div class="app-layout">
+    <app-header-bar class="app-header"></app-header-bar>
+    <!-- Main Content -->
+    <div class="app-main">
+        <!-- Router Outlet -->
+        <div class="app-content">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- Right-side Menu -->
+        <!-- <p-button (onClick)="op.toggle($event)" icon="pi pi-bars" /> -->
+        <div class="app-menu" #sideMane>
+            <app-side-menu></app-side-menu>
+        </div>
+    </div>
 </div>
+
+
+<!-- <p-overlayPanel #op dismissable="false" [appendTo]="sideMane">
+    <div class="flex flex-column gap-3 w-25rem">
+        <app-side-menu></app-side-menu>
+    </div>
+</p-overlayPanel> -->

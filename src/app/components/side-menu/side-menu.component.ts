@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -7,7 +7,9 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./side-menu.component.scss']
 })
 export class SideMenuComponent implements OnInit {
+
   items: MenuItem[] | undefined;
+
   ngOnInit() {
     this.items = [
       {
@@ -27,4 +29,5 @@ export class SideMenuComponent implements OnInit {
       }
     ];
   }
+
 }

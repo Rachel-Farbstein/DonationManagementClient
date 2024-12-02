@@ -1,0 +1,11 @@
+p-dialog {
+    direction: rtl;
+    text-align: right;
+    justify-content: right;
+}
+
+.dialog-footer-buttons {
+    display: flex;
+    justify-content: left;
+    direction: ltr;
+}

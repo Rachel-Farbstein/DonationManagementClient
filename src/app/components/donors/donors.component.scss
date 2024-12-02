@@ -7,6 +7,14 @@ p-fieldset {
     margin: auto;
     justify-items: center;
     direction: rtl;
+    height: 80%;
+    width: 100%; // Full width of the container
+}
+
+.buttons-top-container {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: left;
 }
 
 .rigth-buttons {
@@ -17,10 +25,7 @@ p-fieldset {
 }
 
 .left-buttons {
-    display: inline;
     width: fit-content;
-    float: left;
-    position: relative;
 }
 
 .th-columName {
@@ -28,10 +33,83 @@ p-fieldset {
     width: fit-content;
 }
 
-.p-paginator .p-dropdown .p-dropdown-label {
-    padding-right: 20% !important;
+.td-column-btn {
+    padding-left: 14px;
+    padding-right: 1px;
 }
 
-p-table div p-paginator div p-dropdown div span {
-    padding-right: 20% !important;
+p-paginator {
+    direction: ltr;
+}
+
+
+
+.dialog-field {
+    margin: 16px auto;
+}
+
+.dialog-field>label {
+    padding-right: 3px;
+}
+
+.dialog-field>input {
+    margin-top: 4px;
+}
+
+p-confirmdialog {
+    direction: rtl;
+}
+
+.confirm-delete-dialog-container {
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    align-items: center;
+    background-color: var(--surface-overlay);
+    justify-content: center;
+    display: grid;
+    color: var(--primary-color);
+    width: fit-content;
+}
+
+.confirm-delete-dialog-i-contain {
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color-text);
+    background-color: var(--primary-color);
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    text-align: center;
+    display: inline-flex;
+    margin: 10px auto;
+}
+
+.confirm-delete-dialog-i-contain>i {
+    color: var(--surface-overlay);
+    font-size: 2.5rem;
+    margin: auto;
+}
+
+.confirm-delete-dialog-container>span {
+    font-weight: 700;
+    display: block;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.confirm-delete-dialog-btn {
+    float: left;
+    margin: auto 5px;
+    width: fit-content;
+}
+
+.confirm-delete-dialog-container>p {
+    margin-bottom: 2rem;
+}
+
+.msg-action {
+    position: absolute;
+    display: contents;
+    z-index: 10;
 }
