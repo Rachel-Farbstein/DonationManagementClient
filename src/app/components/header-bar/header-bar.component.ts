@@ -23,7 +23,7 @@ export class HeaderBarComponent {
     if (this.selectedFile) {
       this.fileUploadService.uploadFile(this.selectedFile).subscribe({
         next: (response) => console.log('File uploaded successfully:', response),
-        error: (err) => console.error('File upload failed:', err),
+        error: (err) => console.error('File upload failed:', err.error),
       });
     }
   }
