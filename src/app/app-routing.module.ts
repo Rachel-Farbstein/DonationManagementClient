@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { DonorsComponent } from './components/donors/donors.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthModule } from 'angular-auth-oidc-client';
 
 const routes: Routes = [
   {
@@ -11,9 +12,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BInmkuf6F',
     pathMatch: 'full',
-    title: 'Home page'
+    title: 'Login'
   },
   {
     path: 'donors',
@@ -23,7 +24,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes),
+  AuthModule.forRoot({
+    config: {
+      authority: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BInmkuf6F',
+      redirectUrl: 'http://localhost:4200/dashboard',
+      clientId: '6pijc2mjedsj94884qfgvh0m1a',
+      scope: 'phone openid email',
+      responseType: 'code'
+    },
+  }),
+  ],
+  exports: [RouterModule, AuthModule]
 })
 export class AppRoutingModule { }

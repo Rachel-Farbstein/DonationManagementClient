@@ -30,6 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { SidebarModule } from 'primeng/sidebar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { LoginComponent } from './components/login/login.component';
+
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   primeNGConfig.ripple = true;
@@ -41,7 +43,8 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     SideMenuComponent,
     HeaderBarComponent,
     DonorsComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,7 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     HttpClientModule,
     MessagesModule,
     SidebarModule,
-    OverlayPanelModule
+    OverlayPanelModule,
   ],
   providers: [
     ConfirmationService,
@@ -79,6 +82,7 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
       multi: true
     }],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
