@@ -25,15 +25,15 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
-  AuthModule.forRoot({
-    config: {
-      authority: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BInmkuf6F',
-      redirectUrl: 'http://localhost:4200/dashboard',
-      clientId: '6pijc2mjedsj94884qfgvh0m1a',
-      scope: 'phone openid email',
-      responseType: 'code'
-    },
-  }),
+    // AuthModule.forRoot({
+    //   config: {
+    //     authority: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BInmkuf6F',
+    //     redirectUrl: 'http://localhost:4200/dashboard',
+    //     clientId: '6pijc2mjedsj94884qfgvh0m1a',
+    //     scope: 'phone openid email',
+    //     responseType: 'code'
+    //   },
+    // }),
   ],
   exports: [RouterModule, AuthModule]
 })
