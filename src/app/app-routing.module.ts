@@ -4,13 +4,10 @@ import { AppComponent } from './app.component';
 import { DonorsComponent } from './components/donors/donors.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthModule } from 'angular-auth-oidc-client';
-import { LoginComponent } from './components/login/login.component';
+
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -23,7 +20,7 @@ const routes: Routes = [
   // },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: '/dashboard',
     pathMatch: 'full',
     title: 'Dashboard'
   },

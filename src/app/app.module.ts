@@ -30,8 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { SidebarModule } from 'primeng/sidebar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { LoginComponent } from './components/login/login.component';
-import { AmplifyAuthenticatorModule, AuthenticatorService } from '@aws-amplify/ui-angular';
+import { AuthService } from './services/auth.service';
 
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
@@ -45,7 +44,6 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     HeaderBarComponent,
     DonorsComponent,
     DashboardComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -73,10 +71,10 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     MessagesModule,
     SidebarModule,
     OverlayPanelModule,
-    AmplifyAuthenticatorModule
   ],
   providers: [
     ConfirmationService,
+    AuthService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeAppFactory,

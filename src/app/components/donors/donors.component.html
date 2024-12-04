@@ -111,9 +111,8 @@
 
     <ng-template pTemplate="footer">
         <div class="dialog-footer-buttons">
-            <p-button label="שמירה" icon="pi pi-check" (onClick)="saveDonor()" raised="true" text="true"
-                [disabled]="donorDetailsForm.invalid" />
-            <p-button label="ביטול" icon="pi pi-times" (onClick)="hideDialog()" raised="true" text="true" />
+            <p-button label="שמירה" icon="pi pi-check" (onClick)="saveDonor()" [disabled]="donorDetailsForm.invalid" />
+            <p-button label="ביטול" icon="pi pi-times" (onClick)="hideDialog()" />
         </div>
     </ng-template>
 
@@ -129,11 +128,11 @@
             </span>
             <p>{{ message.message }}</p>
             <div>
-                <button pButton [label]="message.acceptLabel" (click)="cd.accept()" class="confirm-delete-dialog-btn">
-                </button>
-                <button pButton [label]="message.rejectLabel" [outlined]="true" (click)="cd.reject()"
+                <p-button [label]="message.acceptLabel" (click)="cd.accept()" class="confirm-delete-dialog-btn">
+                </p-button>
+                <p-button [label]="message.rejectLabel" [outlined]="true" (click)="cd.reject()"
                     class="confirm-delete-dialog-btn">
-                </button>
+                </p-button>
             </div>
         </div>
     </ng-template>
