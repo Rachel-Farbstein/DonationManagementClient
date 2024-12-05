@@ -17,7 +17,7 @@ import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { RatingModule } from 'primeng/rating';
+// import { RatingModule } from 'primeng/rating';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
@@ -25,17 +25,20 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { InputMaskModule } from 'primeng/inputmask';
+// import { InputMaskModule } from 'primeng/inputmask';
 import { HttpClientModule } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { SidebarModule } from 'primeng/sidebar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AuthService } from './services/auth.service';
+import { Amplify } from 'aws-amplify';
+// import { awsconfig } from '../awsc';
 
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   primeNGConfig.ripple = true;
 };
+
 
 @NgModule({
   declarations: [
@@ -58,14 +61,12 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     DropdownModule,
     TagModule,
     RadioButtonModule,
-    RatingModule,
     FormsModule,
     InputNumberModule,
     DialogModule,
     ConfirmDialogModule,
     InputTextModule,
     RippleModule,
-    InputMaskModule,
     ReactiveFormsModule,
     HttpClientModule,
     MessagesModule,
