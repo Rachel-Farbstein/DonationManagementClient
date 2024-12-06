@@ -4,45 +4,47 @@ import { AppComponent } from './app.component';
 import { DonorsComponent } from './components/donors/donors.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthModule } from 'angular-auth-oidc-client';
+import { LoginComponent } from './components/login/login.component';
+import { RedirectComponent } from './components/redirect/redirect.component';
+import { AuthGuard } from './auth.guard';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 const routes: Routes = [
-
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+  },
+  {
+    path: 'redirect',
+    component: RedirectComponent
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'donors',
+        component: DonorsComponent,
+        title: 'Donors'
+      },
+    ]
   },
-  // {
-  //   path: '',
-  //   redirectTo: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BInmkuf6F',
-  //   pathMatch: 'full',
-  //   title: 'Login'
-  // },
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/login',
     pathMatch: 'full',
     title: 'Dashboard'
-  },
-  {
-    path: 'donors',
-    component: DonorsComponent,
-    title: 'Donors'
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes),
-    //   AuthModule.forRoot({
-    //   config: {
-    //     authority: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BInmkuf6F',
-    //     redirectUrl: 'http://localhost:4200/dashboard',
-    //     clientId: '6pijc2mjedsj94884qfgvh0m1a',
-    //     scope: 'email openid phone',
-    //     responseType: 'code'
-    //   },
-    // }),
-  ],
-  exports: [RouterModule]//AuthModule
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

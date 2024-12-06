@@ -19,7 +19,7 @@ export class SideMenuComponent implements OnInit {
       },
       {
         label: 'תורמים',
-        route: '/donors',
+        route: ['donors'],
         icon: 'pi pi-address-book'
       },
       {
