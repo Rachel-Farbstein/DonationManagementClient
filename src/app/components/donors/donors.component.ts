@@ -1,7 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Donor } from '../../models/donor.interface';
 import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DonorsService } from 'src/app/services/donors.service';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-donors',
@@ -9,72 +12,206 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./donors.component.scss'],
   providers: [MessageService]
 })
-export class DonorsComponent {
+export class DonorsComponent implements OnInit {
 
-  constructor(private messageService: MessageService) { }
-
+  constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private donorServise: DonorsService) { }
   // private messageService = inject(MessageService);
 
+  donorList!: Donor[];
+  rows = 5;
+  metaKey: boolean = true;
+  selectedDonors!: Donor[] | null;
+  donorDialog: boolean = false;
+  donor!: Donor;
+  submitted: boolean = false;
+  messages: Message[] = [];
+
+  fullNameControl = new FormControl<string>('', [
+    Validators.required
+  ])
+  emailControl = new FormControl<string>('', [
+    Validators.required,
+    Validators.email
+  ]);
+  addressControl = new FormControl<string>('');
+  phoneControl = new FormControl('', [
+    Validators.pattern('^[- +()0-9]+$')
+  ])
+
+  donorDetailsForm = new FormGroup({
+    fullNameControl: this.fullNameControl,
+    emailControl: this.emailControl,
+    addressControl: this.addressControl,
+    phoneControl: this.phoneControl,
+  });
+
+  ngOnInit(): void {
+    this.getDonors();
+  }
+
+  getDonors() {
+    this.donorServise.getDonors()
+      .subscribe(donors => this.donorList = donors);
+  }
+
+  fillDonorFromForm() {
+    this.donor.fullName = this.fullNameControl.value ? this.fullNameControl.value : '';
+    this.donor.email = this.emailControl.value ? this.emailControl.value : '';
+    this.donor.address = this.addressControl.value ? this.addressControl.value : '';
+    this.donor.phone = this.phoneControl?.value ? this.phoneControl.value : '';
+  }
+
+  saveDonor() {
+    const that = this;
+    console.log("Id:", this.donor.id);
+    this.fillDonorFromForm();
+    if (!this.donor.id) {
+      this.donorServise.addDonor(this.donor)
+        .subscribe(donor => (
+          this.donor = donor,
+          this.donorList.push(this.donor),
+          this.messageService.add(
+            {
+              severity: 'success',
+              summary: 'נשמר',
+              detail: 'תורם נשמר בהצלחה',
+              life: 3000
+            }),
+          this.afterSaveDonor()
+        )
+        );
+    }
+    else {
+      let ind = this.findIndexById(this.donor.id);
+      if (ind >= 0) {
+        this.donorServise.editDonor(this.donor)
+          .subscribe({
+            next(donor) {
+              that.donor = donor;
+              that.messageService.add(
+                {
+                  severity: 'success',
+                  summary: 'נשמר',
+                  detail: 'תורם עודכן בהצלחה',
+                  life: 3000
+                });
+              that.afterSaveDonor();
+            }
+          });
+      }
+    }
+
+  }
+
+  afterSaveDonor() {
+    this.submitted = true;
+    this.donorList = [...this.donorList];
+    this.donorDialog = false;
+    this.initDonor();
+  }
+
+  findIndexById(id: number): number {
+    let index = -1;
+    for (let i = 0; i < this.donorList.length; i++) {
+      if (this.donorList[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+
+    return index;
+  }
+
+  initDonor() {
+    this.donor = {
+      id: 0,
+      fullName: "",
+      email: "",
+      address: "",
+      phone: ""
+    };
+  }
+
   onRowSelect(event: any) {
-    this.messageService.add({ severity: 'info', summary: 'Donor Selected', detail: event.data.fullName });
   }
 
   onRowUnselect(event: any) {
   }
 
-  deleteSelectedProducts() {
-    throw new Error('Method not implemented.');
-  }
-  openNew() {
-    throw new Error('Method not implemented.');
-  }
-
-  first = 0;
-  rows = 10;
-  metaKey: boolean = true;
-  selectedDonors!: Donor[] | null;
-
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  isLastPage(): boolean {
-    return this.donorList ? this.first === this.donorList.length - this.rows : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.donorList ? this.first === 0 : true;
-  }
-
-  donorList: Donor[] = [
-    {
-      id: 11,
-      fullName: 'רחל פרבשטיין ',
-      email: 'rachely7331',
-      address: 'רובין',
-      phone: '7331'
-    },
-    {
-      id: 22,
-      fullName: 'יהודה פרבשטיין ',
-      email: 'rachely7331',
-      address: 'רובין',
-      phone: '3162'
-    },
-    {
-      id: 33,
-      fullName: 'שלום פרבשטיין ',
-      email: 'rachely7331',
-      address: 'רובין',
-      phone: '000'
+  deleteSelectedDonors() {
+    this.confirmationService.confirm({
+      header: 'האם אתה בטוח',
+      message: 'נא אשר את מחיקת התורמים שנבחרו',
+      acceptLabel: 'מחק',
+      rejectLabel: 'בטל',
+      accept: () => {
+        this.deleteDonors();
+      }
     }
-  ];
+    );
+  }
+
+  async deleteDonors() {
+    let selectedIds = this.selectedDonors?.map(donor => donor.id);
+    const response = await this.donorServise.removeDonors(selectedIds).
+      catch((err) => {
+        this.messageService.add(
+          {
+            severity: 'error', summary: 'פעולה נכשלה', detail: ' :מחיקת הרשומות נכשלה'
+          }
+        )
+        return null;
+      })
+
+    if (!response) {
+      return;
+    }
+    this.getDonors();
+    this.donorList = [...this.donorList];
+    this.selectedDonors = [];
+    this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורמים נמחקו בהצלחה', life: 3000 });
+  }
+
+  openNewDonor() {
+    this.initDonor();
+    this.donorDetailsForm.reset();
+    this.submitted = false;
+    this.donorDialog = true;
+  }
+
+  deleteDonor(donor: Donor) {
+
+    this.confirmationService.confirm({
+      header: 'האם אתה בטוח',
+      message: 'נא אשר את מחיקת ' + donor.fullName,
+      acceptLabel: 'מחק',
+      rejectLabel: 'בטל',
+      accept: () => {
+        this.donorServise.removeDonor(donor.id);
+        this.getDonors();
+        this.donorList = [...this.donorList];
+        this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורם נמחק בהצלחה', life: 3000 });
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+      }
+    });
+
+  }
+
+  editDonor(donor: Donor) {
+    this.donor = donor;
+    this.submitted = false;
+    this.donorDialog = true;
+    this.fullNameControl.setValue(donor.fullName);
+    this.emailControl.setValue(donor.email);
+    this.addressControl.setValue(donor.address);
+    this.phoneControl.setValue(donor.phone);
+  }
+
+  hideDialog() {
+    this.donorDialog = false;
+    this.submitted = false;
+  }
+
 }

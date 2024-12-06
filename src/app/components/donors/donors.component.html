@@ -1,22 +1,21 @@
-<p-toast />
+<!-- <p-toast /> -->
 <p-fieldset legend="פרטי תורמים">
-    <div class="mb-3">
-        <span>
-            <p-button type="button" icon="pi pi-chevron-left" (onClick)="prev()" [disabled]="isFirstPage()"
-                styleClass="p-button-text" />
-            <p-button type="button" icon="pi pi-refresh" (onClick)="reset()" styleClass="p-button-text" />
-            <p-button type="button" icon="pi pi-chevron-right" (onClick)="next()" [disabled]="isLastPage()"
-                styleClass="p-button-text" />
-        </span>
+    <div class=buttons-top-container>
         <span class="left-buttons">
-            <p-button type="button" icon="pi pi-user-plus" (onClick)="openNew()" styleClass="p-button-text" />
+            <p-button type="button" icon="pi pi-user-plus" (onClick)="openNewDonor()" styleClass="p-button-text"
+                size="large" />
+            <p-button type="button" icon="pi pi-trash" [disabled]="!selectedDonors?.length"
+                (onClick)="deleteSelectedDonors()" styleClass="p-button-text" size="large" />
         </span>
     </div>
-    <p-table [value]="donorList" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped"
-        [paginator]="true" [rows]="5" [resizableColumns]="true" columnResizeMode="expand" sortField="fullName"
-        [sortOrder]="1" selectionMode="multiple" [(selection)]="selectedDonors" [metaKeySelection]="metaKey"
-        dataKey="id" [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true"
-        scrollHeight="80%" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+
+    <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" />
+
+    <p-table [value]="donorList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
+        [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"
+        selectionMode="multiple" [(selection)]="selectedDonors" [metaKeySelection]="metaKey" dataKey="id"
+        [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true" scrollHeight="400px"
+        (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th class="th-columName">
@@ -47,6 +46,12 @@
                     <p-columnFilter type="text" field="phone" display="menu" [showMatchModes]="false"
                         matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
+                <th class="th-columName">
+                    <p-button hidden="true"></p-button>
+                </th>
+                <th class="th-columName">
+                    <p-button hidden="true"></p-button>
+                </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-donor>
@@ -59,7 +64,76 @@
                 <td class="th-columName">{{ donor.email }}</td>
                 <td class="th-columName">{{ donor.address }}</td>
                 <td class="th-columName">{{ donor.phone }}</td>
+                <td class="th-columName td-column-btn">
+                    <p-button icon="pi pi-user-edit" [rounded]="true" [outlined]="true" (onClick)="editDonor(donor) "
+                        size="small" />
+                </td>
+                <td class="th-columName td-column-btn">
+                    <p-button icon="pi pi-user-minus" [rounded]="true" [outlined]="true" size="small"
+                        (onClick)="deleteDonor(donor) " />
+                </td>
             </tr>
         </ng-template>
     </p-table>
 </p-fieldset>
+
+
+<p-dialog [(visible)]="donorDialog" [style]="{ width: '450px' }" header="פרטי תורם" [modal]="true" styleClass="p-fluid">
+    <form [formGroup]="donorDetailsForm">
+
+        <div class="field dialog-field">
+            <label for="fullName">שם</label>
+            <input type="text" pInputText id="fullName" formControlName="fullNameControl" />
+            <small class="p-error" *ngIf="submitted && !fullNameControl.value">
+                שם שדה חובה
+            </small>
+        </div>
+        <div class="field dialog-field">
+            <label for="email">מייל</label>
+            <input type="email" pInputText id="email" formControlName="emailControl" />
+            <small class="p-error" *ngIf="(emailControl.invalid && emailControl.value)">
+                כתובת מייל אינה חוקית
+            </small>
+        </div>
+        <div class="field dialog-field">
+            <label for="address">כתובת</label>
+            <input type="text" pInputText id="address" formControlName="addressControl" />
+            {{addressControl.value}}
+        </div>
+        <div class="field dialog-field">
+            <label for="phone">טלפון</label>
+            <input type="phone" pInputText id="phone" formControlName="phoneControl" />
+            <small class="p-error" *ngIf="(phoneControl.invalid && phoneControl.value)">
+                מספר טלפון אינו תקין
+            </small>
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer-buttons">
+            <p-button label="שמירה" icon="pi pi-check" (onClick)="saveDonor()" [disabled]="donorDetailsForm.invalid" />
+            <p-button label="ביטול" icon="pi pi-times" (onClick)="hideDialog()" />
+        </div>
+    </ng-template>
+
+</p-dialog>
+<p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message>
+        <div class="confirm-delete-dialog-container">
+            <div class="confirm-delete-dialog-i-contain">
+                <i class="pi pi-question text-5xl"></i>
+            </div>
+            <span class="">
+                {{ message.header }}
+            </span>
+            <p>{{ message.message }}</p>
+            <div>
+                <p-button [label]="message.acceptLabel" (click)="cd.accept()" class="confirm-delete-dialog-btn">
+                </p-button>
+                <p-button [label]="message.rejectLabel" [outlined]="true" (click)="cd.reject()"
+                    class="confirm-delete-dialog-btn">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>

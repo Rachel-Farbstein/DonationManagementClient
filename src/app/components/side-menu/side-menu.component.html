@@ -1,4 +1,4 @@
-<div class="card flex justify-content-center">
+<div>
     <p-menu [model]="items">
         <ng-template pTemplate="item" let-item>
             <ng-container *ngIf="item.route; else elseBlock">
@@ -15,4 +15,7 @@
             </ng-template>
         </ng-template>
     </p-menu>
+
 </div>
+
+<!-- <p-button icon="pi pi-bars" *ngIf="isOpen" class="toggle-sidebar-btn" (click)="onToggle()"></p-button> -->
