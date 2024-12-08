@@ -1,1 +1,103 @@
 /* Sidebar Styles */
+.side-container {
+    height: 100%;
+
+    .toggle-btn {
+        border-radius: 50%;
+        right: auto;
+        left: -12px;
+        position: relative;
+        top: 20px;
+        z-index: 20;
+        background-color: var(--surface-overlay);
+        color: var(--primary-color);
+        height: 40px;
+        width: 40px;
+        border: 1px solid var(--primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .p-ink {
+            background: var(--primary-color);
+            opacity: 0.3;
+        }
+    }
+
+}
+
+.menu-container {
+    // padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+
+
+    .item-container {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        padding: 24px 0;
+        font-size: 18px;
+        border-radius: 5px;
+        color: var(--primary-color-text);
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+
+        &:hover {
+            background-color: var(--surface-hover);
+            opacity: 0.6;
+            color: var(--primary-color);
+        }
+
+        &.active {
+            background-color: var(--primary-400);
+            // transform: scale(1.05); // Slight zoom effect
+            // animation: slide-in 0.1s forwards;
+
+            &:hover {
+                background-color: var(--surface-hover);
+                opacity: 0.5;
+                color: var(--primary-color);
+            }
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+
+        .icon {
+            font-size: 34px;
+            transition: font-size 0.3s ease;
+
+            &.collapsed {
+                font-size: 24px;
+            }
+
+        }
+
+        .label {
+            transition: opacity 0.3s ease; // אנימציה להופעת/היעלמות הטקסט
+            opacity: 1;
+
+            &.collapsed {
+                opacity: 0;
+            }
+        }
+    }
+}

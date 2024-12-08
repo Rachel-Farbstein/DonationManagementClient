@@ -1,21 +1,16 @@
-<div>
-    <p-menu [model]="items">
-        <ng-template pTemplate="item" let-item>
-            <ng-container *ngIf="item.route; else elseBlock">
-                <a [routerLink]="item.route" class="p-menuitem-link">
-                    <span [class]="item.icon"></span>
-                    <span class="ml-2">{{ item.label }}</span>
-                </a>
-            </ng-container>
-            <ng-template #elseBlock>
-                <a [href]="item.url" class="p-menuitem-link">
-                    <span [class]="item.icon"></span>
-                    <span class="ml-2">{{ item.label }}</span>
-                </a>
-            </ng-template>
-        </ng-template>
-    </p-menu>
-
+<div class="side-container">
+    <button pRipple class="toggle-btn" (click)="toggleMenuState()">
+        <i *ngIf="isCollapsed" class="pi pi-chevron-circle-left"></i>
+        <i *ngIf="!isCollapsed" class="pi pi-chevron-circle-right"></i>
+    </button>
+    <div class="menu-container">
+        <a pRipple *ngFor="let item of menuItems" [routerLink]="item.route" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}" class="item-container">
+            <i [class]="item.icon" class="icon" [class.collapsed]="isCollapsed"></i>
+            <span *ngIf="!isCollapsed" class="label" [class.collapsed]="isCollapsed">{{ item.label }}</span>
+        </a>
+    </div>
 </div>
-
+<!-- <div *ngFor="let item of menuItems" [class.active]="isActive(item.url)" class="item-container"
+    (click)="navigateTo(item.url)"> -->
 <!-- <p-button icon="pi pi-bars" *ngIf="isOpen" class="toggle-sidebar-btn" (click)="onToggle()"></p-button> -->
