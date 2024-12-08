@@ -1,20 +1,26 @@
-<h1>Welcome to the Dashboard</h1>
+<!-- <h1>Welcome to the Dashboard</h1>
 <p *ngIf="userData">Hello, {{ userData.userData.username}}</p>
-<p *ngIf="!userData">Loading user data...</p>
+<p *ngIf="!userData">Loading user data...</p> -->
 
-<div class="app-layout">
-    <app-header-bar class="app-header">
-    </app-header-bar>
-    <!-- Ma     in Content -->
-    <div class="app-main">
-        <!-- Router Outlet -->
-        <div class="app-content">
+<div class="dash-layout">
+
+    <div class="dash-header">
+        <app-header-bar>
+        </app-header-bar>
+    </div>
+
+    <div class="dash-main">
+
+        <div class="dash-content">
             <router-outlet></router-outlet>
         </div>
-        <!-- Right-side Menu -->
-        <!-- <p-button (onClick)="op.toggle($event)" icon="pi pi-bars" /> -->
-        <div class="app-menu" #sideMane>
-            <app-side-menu></app-side-menu>
+
+        <div class="dash-side" [class.side-collapsed]="isMenuCollapsed">
+            <app-side-menu (toggleMenu)="onToggleMenu($event)"></app-side-menu>
         </div>
+        <!-- <div class="dash-side side-absolute" #sideMane>
+            <app-side-menu></app-side-menu>
+        </div> -->
     </div>
+
 </div>

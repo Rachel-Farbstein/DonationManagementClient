@@ -1,5 +1,6 @@
 <div class="container-header">
-    <p-button (click)="uploadFile()" icon="pi pi-upload">Upload</p-button>
-    <input pInputText type="file" (change)="onFileSelected($event)">
-    <p-button (click)="logout()">Logout</p-button>
+    <!-- <p-button (click)="uploadFile()" icon="pi pi-upload">Upload</p-button>
+    <input pInputText type="file" (change)="onFileSelected($event)"> -->
+    <p-button icon="pi pi-sign-out" pTooltip="התנתק" tooltipPosition="bottom" [outlined]="true" class="btn-logout"
+        (click)="logout()"></p-button>
 </div>

@@ -20,11 +20,17 @@ export class DashboardComponent implements OnInit {
 
   userData$ = this.oidcSecurityService.userData$;
 
+  isMenuCollapsed = false;
+
   ngOnInit() {
     this.oidcSecurityService.userData$.subscribe((data) => {
       this.userData = data;
       console.log('User Data:', data);
     });
+  }
+
+  onToggleMenu(isCollapsed: any) {
+    this.isMenuCollapsed = isCollapsed; // עדכון המצב לפי הערך שהגיע מהבן
   }
 
 }

@@ -11,12 +11,6 @@ p-fieldset {
     width: 100%; // Full width of the container
 }
 
-.buttons-top-container {
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: left;
-}
-
 .rigth-buttons {
     display: inline;
     width: fit-content;
@@ -24,8 +18,16 @@ p-fieldset {
     position: relative;
 }
 
-.left-buttons {
-    width: fit-content;
+.buttons-top-left {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    >p-button {
+        font-size: larger;
+    }
 }
 
 .th-columName {

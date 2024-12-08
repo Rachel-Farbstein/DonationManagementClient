@@ -1,3 +1,15 @@
+body {
+    margin: 0;
+    font-family: 'Assistant', sans-serif !important;
+    letter-spacing: 0.02em;
+    font-weight: 600 !important;
+}
+
+.p-component {
+    font-family: 'Assistant', sans-serif !important;
+    letter-spacing: 0.02em;
+}
+
 p-dialog {
     direction: rtl;
     text-align: right;

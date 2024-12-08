@@ -1,12 +1,9 @@
 <!-- <p-toast /> -->
 <p-fieldset legend="פרטי תורמים">
-    <div class=buttons-top-container>
-        <span class="left-buttons">
-            <p-button type="button" icon="pi pi-user-plus" (onClick)="openNewDonor()" styleClass="p-button-text"
-                size="large" />
-            <p-button type="button" icon="pi pi-trash" [disabled]="!selectedDonors?.length"
-                (onClick)="deleteSelectedDonors()" styleClass="p-button-text" size="large" />
-        </span>
+    <div class="buttons-top-left">
+        <p-button icon="pi pi-user-plus" (onClick)="openNewDonor()" pTooltip="הוספת תורם" tooltipPosition="bottom" />
+        <p-button icon="pi pi-trash" [disabled]="!selectedDonors?.length" (onClick)="deleteSelectedDonors()"
+            pTooltip="מחיקת תורמים" tooltipPosition="bottom" />
     </div>
 
     <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" />

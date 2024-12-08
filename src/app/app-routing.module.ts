@@ -6,7 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { LoginComponent } from './components/login/login.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
 
 
@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    title: 'Dashboard',
+    // canActivate: [AuthGuard],
     children: [
       {
         path: 'donors',
@@ -37,7 +38,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/dashboard',
+    // redirectTo: '/login',
     pathMatch: 'full',
     title: 'Dashboard'
   },
