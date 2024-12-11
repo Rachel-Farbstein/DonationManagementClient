@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { userInfo } from 'os';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-redirect',
@@ -11,17 +13,28 @@ export class RedirectComponent {
 
   constructor(
     private oidcSecurityService: OidcSecurityService,
-    private router: Router
-  ) { }
+    private authService: AuthService,
+    private router: Router) { }
+
+  userData: any;
 
   ngOnInit() {
-    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
+
+    this.authService.isAuthenticated().subscribe(isAuthenticated => {
       if (isAuthenticated) {
+        this.oidcSecurityService.getAccessToken().subscribe((token) => {
+          console.log('JWT Token:', token);
+          localStorage.setItem('jwt', token);
+        });
+        this.authService.setUserInfo();
         this.router.navigate(['/dashboard']);
-      } else {
+      }
+      else {
+        this.router.navigate(['/logout']);
         console.error('Authentication failed');
       }
-    });
+    })
+
   }
 
 }

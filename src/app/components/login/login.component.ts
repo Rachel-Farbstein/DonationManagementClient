@@ -8,8 +8,8 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(
-    private oidcSecurityService: OidcSecurityService) { }
+  constructor(private oidcSecurityService: OidcSecurityService) { }
+
   ngOnInit(): void {
     this.login();
   }

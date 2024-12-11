@@ -15,5 +15,6 @@ export const environment = {
         region: 'eu-north-1',
         domain: 'https://eu-north-1binmkuf6f.auth.eu-north-1.amazoncognito.com',
         redirectUri: 'http://localhost:4200/'
-    }
+    },
+    apiBaseUrl: 'https://localhost:44387/api',
 };

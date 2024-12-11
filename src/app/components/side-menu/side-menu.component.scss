@@ -41,9 +41,8 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        gap: 10px;
-        padding: 24px 0;
-        font-size: 18px;
+        // gap: 2px;
+        padding: 12px 0;
         border-radius: 5px;
         color: var(--primary-color-text);
         text-decoration: none;
@@ -82,16 +81,20 @@
 
 
         .icon {
-            font-size: 34px;
+            font-size: 24px;
             transition: font-size 0.3s ease;
+            // border: solid var(--primary-color-text) 2px;
+            border-radius: 50%;
+            padding: 14px;
 
             &.collapsed {
-                font-size: 24px;
+                font-size: 20px;
             }
 
         }
 
         .label {
+            font-size: 18px;
             transition: opacity 0.3s ease; // אנימציה להופעת/היעלמות הטקסט
             opacity: 1;
 

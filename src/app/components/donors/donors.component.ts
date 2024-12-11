@@ -63,9 +63,9 @@ export class DonorsComponent implements OnInit {
 
   saveDonor() {
     const that = this;
-    console.log("Id:", this.donor.id);
+    console.log("Id:", this.donor.donorId);
     this.fillDonorFromForm();
-    if (!this.donor.id) {
+    if (!this.donor.donorId) {
       this.donorServise.addDonor(this.donor)
         .subscribe(donor => (
           this.donor = donor,
@@ -82,7 +82,7 @@ export class DonorsComponent implements OnInit {
         );
     }
     else {
-      let ind = this.findIndexById(this.donor.id);
+      let ind = this.findIndexById(this.donor.donorId);
       if (ind >= 0) {
         this.donorServise.editDonor(this.donor)
           .subscribe({
@@ -113,7 +113,7 @@ export class DonorsComponent implements OnInit {
   findIndexById(id: number): number {
     let index = -1;
     for (let i = 0; i < this.donorList.length; i++) {
-      if (this.donorList[i].id === id) {
+      if (this.donorList[i].donorId === id) {
         index = i;
         break;
       }
@@ -124,7 +124,7 @@ export class DonorsComponent implements OnInit {
 
   initDonor() {
     this.donor = {
-      id: 0,
+      donorId: 0,
       fullName: "",
       email: "",
       address: "",
@@ -152,7 +152,7 @@ export class DonorsComponent implements OnInit {
   }
 
   async deleteDonors() {
-    let selectedIds = this.selectedDonors?.map(donor => donor.id);
+    let selectedIds = this.selectedDonors?.map(donor => donor.donorId);
     const response = await this.donorServise.removeDonors(selectedIds).
       catch((err) => {
         this.messageService.add(
@@ -187,7 +187,7 @@ export class DonorsComponent implements OnInit {
       acceptLabel: 'מחק',
       rejectLabel: 'בטל',
       accept: () => {
-        this.donorServise.removeDonor(donor.id);
+        this.donorServise.removeDonor(donor.donorId);
         this.getDonors();
         this.donorList = [...this.donorList];
         this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורם נמחק בהצלחה', life: 3000 });

@@ -8,6 +8,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
+import { DonationsComponent } from './components/donations/donations.component';
+import { ReceiptsComponent } from './components/receipts/receipts.component';
 
 
 const routes: Routes = [
@@ -27,21 +29,31 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     title: 'Dashboard',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'donors',
         component: DonorsComponent,
         title: 'Donors'
       },
+      {
+        path: 'donations',
+        component: DonationsComponent,
+        title: 'Donations'
+      },
+      {
+        path: 'receipts',
+        component: ReceiptsComponent,
+        title: 'Receipts'
+      },
     ]
   },
   {
     path: '',
-    redirectTo: '/dashboard',
-    // redirectTo: '/login',
+    // redirectTo: '/dashboard',
+    redirectTo: '/login',
     pathMatch: 'full',
-    title: 'Dashboard'
+    title: 'Login'
   },
 ];
 

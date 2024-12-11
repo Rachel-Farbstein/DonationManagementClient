@@ -31,8 +31,13 @@ export class SideMenuComponent implements OnInit {
       },
       {
         label: 'תרומות',
-        route: ['dashboard', 'donates'],
+        route: ['/dashboard', 'donations'],
         icon: 'pi pi-dollar'
+      },
+      {
+        label: 'קבלות',
+        route: ['/dashboard', 'receipts'],
+        icon: 'pi pi-receipt'
       }
     ];
   }

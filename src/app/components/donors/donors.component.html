@@ -43,10 +43,10 @@
                     <p-columnFilter type="text" field="phone" display="menu" [showMatchModes]="false"
                         matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
-                <th class="th-columName">
+                <th class="th-columName td-column-btn">
                     <p-button hidden="true"></p-button>
                 </th>
-                <th class="th-columName">
+                <th class="th-columName td-column-btn">
                     <p-button hidden="true"></p-button>
                 </th>
             </tr>
@@ -95,7 +95,6 @@
         <div class="field dialog-field">
             <label for="address">כתובת</label>
             <input type="text" pInputText id="address" formControlName="addressControl" />
-            {{addressControl.value}}
         </div>
         <div class="field dialog-field">
             <label for="phone">טלפון</label>
