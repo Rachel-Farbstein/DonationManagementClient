@@ -1,7 +1,7 @@
 <div class="side-container">
     <button pRipple class="toggle-btn" (click)="toggleMenuState()">
-        <i *ngIf="isCollapsed" class="pi pi-chevron-circle-left"></i>
-        <i *ngIf="!isCollapsed" class="pi pi-chevron-circle-right"></i>
+        <i *ngIf="isCollapsed" class="pi pi-chevron-left"></i>
+        <i *ngIf="!isCollapsed" class="pi pi-chevron-right"></i>
     </button>
     <div class="menu-container">
         <a pRipple *ngFor="let item of menuItems" [routerLink]="item.route" routerLinkActive="active"
@@ -11,6 +11,3 @@
         </a>
     </div>
 </div>
-<!-- <div *ngFor="let item of menuItems" [class.active]="isActive(item.url)" class="item-container"
-    (click)="navigateTo(item.url)"> -->
-<!-- <p-button icon="pi pi-bars" *ngIf="isOpen" class="toggle-sidebar-btn" (click)="onToggle()"></p-button> -->

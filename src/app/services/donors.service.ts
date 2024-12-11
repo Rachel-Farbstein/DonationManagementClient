@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClientModule, HttpResponse } from '@angular/common/http';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
 export class DonorsService {
 
   donorList!: Donor[];
-  private url: string = 'https://localhost:44387/api/donors';
+  private url: string = environment.apiBaseUrl + '/donors';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -43,6 +44,6 @@ export class DonorsService {
   }
 
   editDonor(donor: Donor): Observable<Donor> {
-    return this.httpClient.put<Donor>(this.url + '/' + donor.id, donor);
+    return this.httpClient.put<Donor>(this.url + '/' + donor.donorId, donor);
   }
 }

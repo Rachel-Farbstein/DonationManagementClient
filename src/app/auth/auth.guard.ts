@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     return this.oidcSecurityService.isAuthenticated$.pipe(
       map(({ isAuthenticated }) => {
         if (!isAuthenticated) {
-          this.router.navigate(['/logout']);
+          this.router.navigate(['/login']);
         }
         return isAuthenticated;
       })

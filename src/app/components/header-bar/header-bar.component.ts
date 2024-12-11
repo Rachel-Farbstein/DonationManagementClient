@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { AuthService } from 'src/app/services/auth.service';
 import { FileUploadService } from 'src/app/services/fileUpload.service';
 
 @Component({
@@ -11,28 +12,10 @@ export class HeaderBarComponent {
 
   selectedFile: File | null = null;
 
-  constructor(private oidcSecurityService: OidcSecurityService, private fileUploadService: FileUploadService) { }
-
-  logoutHref = "https://eu-north-1fg2yyzfrc.auth.eu-north-1.amazoncognito.com/logout?client_id=1s6o9ut1ajuqqbenev2k0i5r3m&logout_uri=http://localhost:4200/logout";
+  constructor(private authService: AuthService, private fileUploadService: FileUploadService) { }
 
   logout() {
-
-    if (window.sessionStorage) {
-      window.sessionStorage.clear();
-    }
-    localStorage.clear();
-    sessionStorage.clear();
-
-    this.oidcSecurityService.logoffAndRevokeTokens().subscribe({
-      next: () => {
-        console.log('Successfully logged out');
-        window.location.href = this.logoutHref;
-      },
-      error: (err) => {
-        console.error('Error during logout:', err);
-        window.location.href = this.logoutHref;
-      },
-    });;
+    this.authService.logout();
   }
 
   onFileSelected(event: Event) {
