@@ -1,0 +1,17 @@
+.donor-form-container {
+
+    direction: rtl;
+    margin-bottom: 2rem;
+
+    .form-field-container {
+        margin: 0 auto 16px auto;
+
+        >label {
+            display: block;
+        }
+
+        >input {
+            width: 100%;
+        }
+    }
+}

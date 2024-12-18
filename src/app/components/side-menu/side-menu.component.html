@@ -6,7 +6,8 @@
     <div class="menu-container">
         <a pRipple *ngFor="let item of menuItems" [routerLink]="item.route" routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}" class="item-container">
-            <i [class]="item.icon" class="icon" [class.collapsed]="isCollapsed"></i>
+            <i [class]="item.icon" class="icon" [class.collapsed]="isCollapsed" [tooltipDisabled]="!isCollapsed"
+                [pTooltip]="item.label" tooltipPosition="left"></i>
             <span *ngIf="!isCollapsed" class="label" [class.collapsed]="isCollapsed">{{ item.label }}</span>
         </a>
     </div>

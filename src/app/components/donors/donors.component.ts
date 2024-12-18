@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Donor } from '../../models/donor.interface';
-import { TableRowSelectEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DonorsService } from 'src/app/services/donors.service';
 import { Message } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmDialogModel } from 'src/app/models/confirm-dialog-model';
+import { DonorFormComponent } from './donor-form/donor-form.component';
 
 @Component({
   selector: 'app-donors',
@@ -14,122 +15,88 @@ import { Message } from 'primeng/api';
 })
 export class DonorsComponent implements OnInit {
 
-  constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private donorServise: DonorsService) { }
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private donorService: DonorsService,
+    private dialogService: DialogService
+  ) { }
+
   // private messageService = inject(MessageService);
 
+  showConfirmDialog: boolean = false;
   donorList!: Donor[];
   rows = 5;
   metaKey: boolean = true;
-  selectedDonors!: Donor[] | null;
+  selectedDonors?: Donor[] | null;
   donorDialog: boolean = false;
   donor!: Donor;
   submitted: boolean = false;
   messages: Message[] = [];
-
-  fullNameControl = new FormControl<string>('', [
-    Validators.required
-  ])
-  emailControl = new FormControl<string>('', [
-    Validators.required,
-    Validators.email
-  ]);
-  addressControl = new FormControl<string>('');
-  phoneControl = new FormControl('', [
-    Validators.pattern('^[- +()0-9]+$')
-  ])
-
-  donorDetailsForm = new FormGroup({
-    fullNameControl: this.fullNameControl,
-    emailControl: this.emailControl,
-    addressControl: this.addressControl,
-    phoneControl: this.phoneControl,
-  });
+  deleteConfirmDialogData: ConfirmDialogModel = {
+  }
+  onAcceptConfirmDialogAction: () => void = () => { };
 
   ngOnInit(): void {
-    this.getDonors();
+    this.donorService.donorList$.subscribe(donors => {
+      this.donorList = donors;
+    });
+    this.donorService.getDonors();
   }
 
-  getDonors() {
-    this.donorServise.getDonors()
-      .subscribe(donors => this.donorList = donors);
-  }
+  openDonorForm(donor?: Donor) {
+    const ref = this.dialogService.open(DonorFormComponent, {
+      width: '450px',
+      header: 'פרטי תורם',
+      data: { donor }
+    });
 
-  fillDonorFromForm() {
-    this.donor.fullName = this.fullNameControl.value ? this.fullNameControl.value : '';
-    this.donor.email = this.emailControl.value ? this.emailControl.value : '';
-    this.donor.address = this.addressControl.value ? this.addressControl.value : '';
-    this.donor.phone = this.phoneControl?.value ? this.phoneControl.value : '';
-  }
-
-  saveDonor() {
-    const that = this;
-    console.log("Id:", this.donor.donorId);
-    this.fillDonorFromForm();
-    if (!this.donor.donorId) {
-      this.donorServise.addDonor(this.donor)
-        .subscribe(donor => (
-          this.donor = donor,
-          this.donorList.push(this.donor),
-          this.messageService.add(
-            {
-              severity: 'success',
-              summary: 'נשמר',
-              detail: 'תורם נשמר בהצלחה',
-              life: 3000
-            }),
-          this.afterSaveDonor()
-        )
-        );
-    }
-    else {
-      let ind = this.findIndexById(this.donor.donorId);
-      if (ind >= 0) {
-        this.donorServise.editDonor(this.donor)
-          .subscribe({
-            next(donor) {
-              that.donor = donor;
-              that.messageService.add(
-                {
-                  severity: 'success',
-                  summary: 'נשמר',
-                  detail: 'תורם עודכן בהצלחה',
-                  life: 3000
-                });
-              that.afterSaveDonor();
-            }
-          });
+    ref.onClose.subscribe((updatedDonor) => {
+      if (updatedDonor) {
+        if (donor) {
+          this.editDonor(updatedDonor);
+        }
+        else {
+          this.addDonor(updatedDonor);
+        }
       }
-    }
-
+    });
   }
 
-  afterSaveDonor() {
-    this.submitted = true;
-    this.donorList = [...this.donorList];
-    this.donorDialog = false;
-    this.initDonor();
+  addDonor(donor: Donor) {
+    this.donorService.addDonor(donor)
+      .subscribe(donor => (
+        this.donor = donor,
+        this.messageService.add(
+          {
+            severity: 'success',
+            summary: 'נשמר',
+            detail: 'תורם נשמר בהצלחה',
+            life: 3000
+          })
+      ));
   }
 
-  findIndexById(id: number): number {
-    let index = -1;
-    for (let i = 0; i < this.donorList.length; i++) {
-      if (this.donorList[i].donorId === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
+  editDonor(donor: Donor) {
+    this.donorService.editDonor(donor)
+      .subscribe(donor => (
+        this.donor = donor,
+        this.messageService.add(
+          {
+            severity: 'success',
+            summary: 'נשמר',
+            detail: 'תורם עודכן בהצלחה',
+            life: 3000
+          }))
+      )
   }
 
-  initDonor() {
-    this.donor = {
-      donorId: 0,
-      fullName: "",
-      email: "",
-      address: "",
-      phone: ""
-    };
+  onAcceptConfirmDialog() {
+    this.showConfirmDialog = false;
+  }
+
+  onRejectConfirmDialog() {
+    this.showConfirmDialog = false;
   }
 
   onRowSelect(event: any) {
@@ -138,80 +105,40 @@ export class DonorsComponent implements OnInit {
   onRowUnselect(event: any) {
   }
 
-  deleteSelectedDonors() {
-    this.confirmationService.confirm({
-      header: 'האם אתה בטוח',
-      message: 'נא אשר את מחיקת התורמים שנבחרו',
-      acceptLabel: 'מחק',
-      rejectLabel: 'בטל',
-      accept: () => {
-        this.deleteDonors();
-      }
-    }
-    );
+  confirmDeleteDonor(donor: Donor) {
+    this.deleteConfirmDialogData.question = `האם אתה בטוח שברצונך למחוק את ${donor.fullName} ?`;
+    this.onAcceptConfirmDialogAction = () => this.deleteDonor(donor.donorId);
+    this.showConfirmDialog = true;
   }
 
-  async deleteDonors() {
-    let selectedIds = this.selectedDonors?.map(donor => donor.donorId);
-    const response = await this.donorServise.removeDonors(selectedIds).
-      catch((err) => {
-        this.messageService.add(
-          {
-            severity: 'error', summary: 'פעולה נכשלה', detail: ' :מחיקת הרשומות נכשלה'
-          }
-        )
-        return null;
-      })
-
-    if (!response) {
-      return;
-    }
-    this.getDonors();
-    this.donorList = [...this.donorList];
-    this.selectedDonors = [];
-    this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורמים נמחקו בהצלחה', life: 3000 });
-  }
-
-  openNewDonor() {
-    this.initDonor();
-    this.donorDetailsForm.reset();
-    this.submitted = false;
-    this.donorDialog = true;
-  }
-
-  deleteDonor(donor: Donor) {
-
-    this.confirmationService.confirm({
-      header: 'האם אתה בטוח',
-      message: 'נא אשר את מחיקת ' + donor.fullName,
-      acceptLabel: 'מחק',
-      rejectLabel: 'בטל',
-      accept: () => {
-        this.donorServise.removeDonor(donor.donorId);
-        this.getDonors();
-        this.donorList = [...this.donorList];
+  deleteDonor(donorId: number): void {
+    this.donorService.deleteDonor(donorId).subscribe({
+      next: () => {
         this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורם נמחק בהצלחה', life: 3000 });
       },
-      reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'נכשל', detail: err.message, life: 3000 });
       }
     });
-
   }
 
-  editDonor(donor: Donor) {
-    this.donor = donor;
-    this.submitted = false;
-    this.donorDialog = true;
-    this.fullNameControl.setValue(donor.fullName);
-    this.emailControl.setValue(donor.email);
-    this.addressControl.setValue(donor.address);
-    this.phoneControl.setValue(donor.phone);
+  confirmDeleteSelDonors() {
+    var cnt = this.selectedDonors?.length;
+    this.deleteConfirmDialogData.question = `האם אתה בטוח שברצונך למחוק ${cnt} תורמים?`;
+    this.onAcceptConfirmDialogAction = () => this.deleteDonors();
+    this.showConfirmDialog = true;
   }
 
-  hideDialog() {
-    this.donorDialog = false;
-    this.submitted = false;
+  deleteDonors() {
+    let selectedIds = this.selectedDonors?.map(donor => donor.donorId);
+    this.donorService.deleteDonors(selectedIds).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורמים נמחקו בהצלחה', life: 3000 });
+      },
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'פעולה נכשלה', detail: ' :מחיקת הרשומות נכשלה' });
+      }
+    });
   }
 
 }

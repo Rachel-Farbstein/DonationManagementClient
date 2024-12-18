@@ -1,0 +1,12 @@
+<p-dialog [(visible)]="visible" (onHide)="onReject()" [modal]="true" [style]="{ width: '400px' }">
+    <div class="confirm-delete-dialog-container">
+        <div class="confirm-delete-dialog-i-contain">
+            <i class="pi pi-question text-5xl"></i>
+        </div>
+        <p class="dialog-question">{{ data.question }}</p>
+    </div>
+    <div class="dialog-footer-btn">
+        <button pButton label="כן" (click)="onAccept()"></button>
+        <button pButton label="לא" (click)="onReject()"></button>
+    </div>
+</p-dialog>

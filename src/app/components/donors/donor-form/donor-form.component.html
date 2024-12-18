@@ -1,0 +1,38 @@
+<form [formGroup]="donorDetailsForm" class="donor-form-container">
+
+    <div class="field form-field-container">
+        <label for="fullName">שם</label>
+        <input type="text" pInputText id="fullName" [(ngModel)]="donor.fullName" formControlName="fullNameControl" />
+        <small class="p-error" *ngIf="submitted && !fullNameControl.value">
+            שם שדה חובה
+        </small>
+    </div>
+    <div class="field form-field-container">
+        <label for="email">מייל</label>
+        <input type="email" pInputText id="email" [(ngModel)]="donor.email" formControlName="emailControl" />
+        <small class="p-error" *ngIf="(emailControl.invalid && emailControl.value)">
+            כתובת מייל אינה חוקית
+        </small>
+    </div>
+    <div class="field form-field-container">
+        <label for="address">כתובת</label>
+        <input type="text" pInputText id="address" [(ngModel)]="donor.address" formControlName="addressControl" />
+    </div>
+    <div class="field form-field-container">
+        <label for="phone">טלפון</label>
+        <input type="phone" pInputText id="phone" [(ngModel)]="donor.phone" formControlName="phoneControl" />
+        <small class="p-error" *ngIf="(phoneControl.invalid && phoneControl.value)">
+            מספר טלפון אינו תקין
+        </small>
+    </div>
+</form>
+
+<div class="dialog-footer-buttons">
+    <button pButton pRipple (click)="cancel()" pTooltip="ביטול" tooltipPosition="bottom">
+        <i class="pi pi-times"></i>
+    </button>
+    <button pButton pRipple (click)="saveDonor()" pTooltip="שמור" tooltipPosition="bottom"
+        [disabled]="donorDetailsForm.invalid">
+        <i class="pi pi-check"></i>
+    </button>
+</div>

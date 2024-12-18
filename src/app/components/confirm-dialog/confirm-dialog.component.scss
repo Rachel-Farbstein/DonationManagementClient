@@ -1,0 +1,44 @@
+.confirm-delete-dialog-container {
+    color: var(--primary-color);
+    text-align: center;
+
+    .dialog-question {
+        font-size: 1.5rem;
+        padding-bottom: 20px;
+    }
+}
+
+.confirm-delete-dialog-i-contain {
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color-text);
+    // background-color: var(--blue-400);
+    background-color: var(--primary-color);
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    display: inline-flex;
+    margin: 10px auto;
+    position: absolute;
+    top: -50px;
+    right: 150px;
+    border-style: solid;
+
+    >i {
+        font-size: 2rem;
+    }
+}
+
+.dialog-footer-btn {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    // padding-left: 0.5rem;
+
+    >button {
+        width: 4rem;
+        text-align: center;
+    }
+}

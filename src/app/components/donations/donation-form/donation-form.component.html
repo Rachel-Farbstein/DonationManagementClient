@@ -1,0 +1,44 @@
+<p-dialog [style]="{ width: '450px' }" header="פרטי תרומה" [modal]="true" styleClass="p-fluid">
+    <form [formGroup]="donationDetailsForm">
+
+        <div class="field dialog-field">
+            <label for="donorNameControl">תורם</label>
+            <input type="text" pInputText id="donorName" formControlName="donorNameControl" />
+            <small class="p-error" *ngIf="submitted && !donorNameControl.value">
+                תורם שדה חובה
+            </small>
+        </div>
+
+        <div class="field dialog-field">
+            <label for="amountControl">סכום</label>
+            <input type="number" pInputText id="amount" formControlName="amountControl" />
+            <small class="p-error" *ngIf="(amountControl.value)">
+                סכום צריך להיות גדול מאפס
+            </small>
+        </div>
+        <div class="field dialog-field">
+            <label for="donationDate">תאריך תרומה</label>
+            <input type="date" pInputText id="donationDate" formControlName="donationDateControl" />
+            <small class="p-error" *ngIf="submitted && !donationDateControl.value">
+                תאריך תרומה שדה חובה
+            </small>
+        </div>
+        <div class="field dialog-field">
+            <label for="paymentType">אופן התרומה</label>
+            <input type="phone" pInputText id="paymentType" formControlName="paymentTypeControl" />
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer-buttons">
+            <button pButton pRipple (click)="hideDialog()" pTooltip="ביטול" tooltipPosition="bottom">
+                <i class="pi pi-times"></i>
+            </button>
+            <button pButton pRipple (click)="submitDonation()" pTooltip="שמור" tooltipPosition="bottom"
+                [disabled]="donationDetailsForm.invalid">
+                <i class="pi pi-check"></i>
+            </button>
+        </div>
+    </ng-template>
+
+</p-dialog>

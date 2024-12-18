@@ -5,12 +5,58 @@ body {
     font-weight: 600 !important;
 }
 
+app-donors {
+    display: block;
+    height: 100%;
+}
+
 .p-component {
     font-family: 'Assistant', sans-serif !important;
     letter-spacing: 0.02em;
 }
 
-p-dialog {
+/* p-fieldset scss:*/
+.p-fieldset {
+    margin: auto;
+    padding: 3%;
+    direction: rtl !important;
+    height: 94%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    >div {
+        width: 100%;
+    }
+
+    .buttons-top-left {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+        gap: 8px;
+        margin-bottom: 8px;
+
+        >p-button {
+            font-size: larger;
+        }
+    }
+}
+
+/* p-table scss:*/
+.p-datatable-table {
+    .th-columName {
+        text-align: right;
+        width: fit-content;
+    }
+}
+
+p-paginator {
+    direction: ltr;
+}
+
+/* p-dialog scss:*/
+.p-dialog {
     direction: rtl;
     text-align: right;
     justify-content: right;
@@ -20,4 +66,9 @@ p-dialog {
     display: flex;
     justify-content: left;
     direction: ltr;
+    gap: 10px;
+}
+
+.p-toast {
+    direction: rtl;
 }

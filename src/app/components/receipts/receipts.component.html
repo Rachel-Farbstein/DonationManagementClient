@@ -1,1 +1,7 @@
-<p>receipts works!</p>
+<p-fieldset legend="קבלות">
+    <div class="buttons-top-left">
+        <p-button icon="pi pi-file-plus" (onClick)="AddReceipt()" pTooltip="הוספת קבלה" tooltipPosition="bottom" />
+        <p-button icon="pi pi-trash" [disabled]="!selectedReceipts.length" (onClick)="deleteSelectedReceipts()"
+            pTooltip="מחיקת תרומות" tooltipPosition="bottom" />
+    </div>
+</p-fieldset>
