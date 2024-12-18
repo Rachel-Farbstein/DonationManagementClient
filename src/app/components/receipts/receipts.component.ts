@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class ReceiptsComponent {
 
+  selectedReceipts = [];
+
+  AddReceipt() {
+    throw new Error('Method not implemented.');
+  }
+  deleteSelectedReceipts() {
+    throw new Error('Method not implemented.');
+  }
+
 }

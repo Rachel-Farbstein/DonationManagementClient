@@ -1,1 +1,71 @@
-<p>donations works!</p>
+<p-fieldset legend="תרומות">
+    <div class="buttons-top-left">
+        <p-button icon="pi pi-dollar" (onClick)="openNewDonation()" pTooltip="הוספת תרומה" tooltipPosition="bottom" />
+        <p-button icon="pi pi-trash" [disabled]="!selectedDonations.length" (onClick)="deleteSelectedDonations()"
+            pTooltip="מחיקת תרומות" tooltipPosition="bottom" />
+    </div>
+
+    <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" />
+
+    <p-table [value]="donationList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
+        [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"
+        selectionMode="multiple" [(selection)]="selectedDonations" [metaKeySelection]="metaKey" dataKey="id"
+        [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true" scrollHeight="400px">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th class="th-columName">
+                    <p-tableHeaderCheckbox />
+                </th>
+                <th pSortableColumn="donorName" class="th-columName">
+                    נתרם ע"י
+                    <p-sortIcon field="donorName" />
+                    <p-columnFilter type="text" field="donorName" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th pSortableColumn="donationDate" class="th-columName">
+                    התקבל בתאריך
+                    <p-sortIcon field="donationDate" />
+                    <p-columnFilter type="date" field="donationDate" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th pSortableColumn="amount" class="th-columName">
+                    סכום
+                    <p-sortIcon field="amount" />
+                    <p-columnFilter type="text" field="amount" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th pSortableColumn="paymentType" class="th-columName">
+                    נתרם באמצעות
+                    <p-sortIcon field="paymentType" />
+                    <p-columnFilter type="text" field="paymentType" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
+                <th class="th-columName td-column-btn">
+                    <p-button hidden="true"></p-button>
+                </th>
+                <th class="th-columName td-column-btn">
+                    <p-button hidden="true"></p-button>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-donation>
+            <tr>
+                <td class="th-columName">
+                    <p-tableCheckbox [value]="donation" />
+                </td>
+                <td class="th-columName">{{ donation.donorName }}</td>
+                <td class="th-columName">{{ donation.donationDate }}</td>
+                <td class="th-columName">{{ donation.amount }}</td>
+                <td class="th-columName">{{ donation.paymentType }}</td>
+                <td class="th-columName td-column-btn">
+                    <p-button icon="pi pi-user-edit" [rounded]="true" [outlined]="true"
+                        (onClick)="editDonation(donation) " size="small" />
+                </td>
+                <td class="th-columName td-column-btn">
+                    <p-button icon="pi pi-user-minus" [rounded]="true" [outlined]="true" size="small"
+                        (onClick)="deleteDonation(donation) " />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-fieldset>

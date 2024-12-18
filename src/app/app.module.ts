@@ -36,6 +36,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './auth/jwt.interceptor';
 import { DonationsComponent } from './components/donations/donations.component';
 import { ReceiptsComponent } from './components/receipts/receipts.component';
+import { DonationFormComponent } from './components/donations/donation-form/donation-form.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DonorFormComponent } from './components/donors/donor-form/donor-form.component';
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   primeNGConfig.ripple = true;
@@ -54,6 +58,9 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     LogoutComponent,
     DonationsComponent,
     ReceiptsComponent,
+    DonationFormComponent,
+    ConfirmDialogComponent,
+    DonorFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +89,7 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   ],
   providers: [
     ConfirmationService,
+    DialogService,
     AuthService,
     {
       provide: APP_INITIALIZER,

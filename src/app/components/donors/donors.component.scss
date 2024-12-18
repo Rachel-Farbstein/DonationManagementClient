@@ -1,14 +1,5 @@
-.donor-container {
-    width: 80%;
-    top: 70px;
-}
-
-p-fieldset {
-    margin: auto;
-    justify-items: center;
-    direction: rtl;
-    height: 80%;
-    width: 100%; // Full width of the container
+.app-donors-contaner {
+    height: 100%;
 }
 
 .rigth-buttons {
@@ -18,37 +9,10 @@ p-fieldset {
     position: relative;
 }
 
-.buttons-top-left {
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    gap: 8px;
-    margin-bottom: 8px;
-
-    >p-button {
-        font-size: larger;
-    }
-}
-
-.th-columName {
-    text-align: right;
-    width: fit-content;
-}
-
 .td-column-btn {
     padding-left: 14px;
     padding-right: 1px;
     width: 26px;
-}
-
-p-paginator {
-    direction: ltr;
-}
-
-
-
-.dialog-field {
-    margin: 16px auto;
 }
 
 .dialog-field>label {

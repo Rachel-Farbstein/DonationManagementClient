@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { DonorsComponent } from './components/donors/donors.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AuthModule } from 'angular-auth-oidc-client';
 import { LoginComponent } from './components/login/login.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -29,7 +27,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     title: 'Dashboard',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: 'donors',

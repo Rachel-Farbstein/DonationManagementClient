@@ -1,4 +1,16 @@
+import { Donor } from "./donor.interface"
+
 export interface Donation {
+    donationId: number,
+    donorId: string,
+    donorName: string,
+    donor: Donor,
+    donationDate: Date,
+    amount: number,
+    paymentType: PaymentType
+}
+
+export interface DonationDto {
     donationId: number,
     donorId: string,
     donationDate: Date,
@@ -6,7 +18,7 @@ export interface Donation {
     paymentType: PaymentType
 }
 
-enum PaymentType {
+export enum PaymentType {
     BankTransfer = '1',
     StandingOrder = '2',
     Cash = '3',
