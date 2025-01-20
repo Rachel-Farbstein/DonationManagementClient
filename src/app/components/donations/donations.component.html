@@ -1,7 +1,8 @@
 <p-fieldset legend="תרומות">
     <div class="buttons-top-left">
-        <p-button icon="pi pi-dollar" (onClick)="openNewDonation()" pTooltip="הוספת תרומה" tooltipPosition="bottom" />
-        <p-button icon="pi pi-trash" [disabled]="!selectedDonations.length" (onClick)="deleteSelectedDonations()"
+        <p-button icon="pi pi-plus-circle" (onClick)="openDonationForm()" pTooltip="הוספת תרומה"
+            tooltipPosition="bottom" />
+        <p-button icon="pi pi-trash" [disabled]="!selectedDonations.length" (onClick)="confirmDeleteSelDonations()"
             pTooltip="מחיקת תרומות" tooltipPosition="bottom" />
     </div>
 
@@ -9,12 +10,19 @@
 
     <p-table [value]="donationList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
         [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"
-        selectionMode="multiple" [(selection)]="selectedDonations" [metaKeySelection]="metaKey" dataKey="id"
-        [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true" scrollHeight="400px">
+        selectionMode="multiple" [(selection)]="selectedDonations" [metaKeySelection]="metaKey"
+        dataKey="donation.donationId" [globalFilterFields]="['fullName', 'email', 'address', 'phon']"
+        [scrollable]="true" scrollHeight="400px">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th class="th-columName">
                     <p-tableHeaderCheckbox />
+                </th>
+                <th pSortableColumn="donationId" class="th-columName">
+                    מספר תרומה
+                    <p-sortIcon field="donationId" />
+                    <p-columnFilter type="number" field="donationId" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
                 <th pSortableColumn="donorName" class="th-columName">
                     נתרם ע"י
@@ -40,6 +48,12 @@
                     <p-columnFilter type="text" field="paymentType" display="menu" [showMatchModes]="false"
                         matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
+                <th pSortableColumn="notes" class="th-columName">
+                    הערות
+                    <p-sortIcon field="notes" />
+                    <p-columnFilter type="text" field="notes" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                </th>
                 <th class="th-columName td-column-btn">
                     <p-button hidden="true"></p-button>
                 </th>
@@ -48,24 +62,32 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-donation>
+        <ng-template pTemplate="body" let-donationWithDonorName>
             <tr>
                 <td class="th-columName">
-                    <p-tableCheckbox [value]="donation" />
+                    <p-tableCheckbox [value]="donationWithDonorName" />
                 </td>
-                <td class="th-columName">{{ donation.donorName }}</td>
-                <td class="th-columName">{{ donation.donationDate }}</td>
-                <td class="th-columName">{{ donation.amount }}</td>
-                <td class="th-columName">{{ donation.paymentType }}</td>
+                <td class="th-columName">{{ donationWithDonorName.donation.donationId }}</td>
+                <td class="th-columName">{{ donationWithDonorName.donorName }}</td>
+                <td class="th-columName">{{ donationWithDonorName.donation.donationDate |date: 'dd/MM/yyyy' }}</td>
+                <td class="th-columName">{{ donationWithDonorName.donation.amount }}</td>
+                <td class="th-columName">{{ donationWithDonorName.donation.paymentType | paymentTypeLabel }}</td>
+                <td class="th-columName">{{ donationWithDonorName.donation.notes }}</td>
                 <td class="th-columName td-column-btn">
-                    <p-button icon="pi pi-user-edit" [rounded]="true" [outlined]="true"
-                        (onClick)="editDonation(donation) " size="small" />
+                    <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                        (onClick)="openDonationForm(donationWithDonorName)" size="small" pTooltip="עריכה"
+                        tooltipPosition="bottom" />
                 </td>
                 <td class="th-columName td-column-btn">
-                    <p-button icon="pi pi-user-minus" [rounded]="true" [outlined]="true" size="small"
-                        (onClick)="deleteDonation(donation) " />
+                    <p-button icon="pi pi-minus-circle" [rounded]="true" [outlined]="true" size="small"
+                        (onClick)="confirmDeleteDonation(donationWithDonorName)" pTooltip="מחיקה"
+                        tooltipPosition="bottom" />
                 </td>
             </tr>
         </ng-template>
     </p-table>
 </p-fieldset>
+
+<app-confirm-dialog [visible]="showConfirmDialog" [data]="deleteConfirmDialogData" (accept)="onAcceptConfirmDialog()"
+    (reject)="onRejectConfirmDialog()" [onAcceptAction]="onAcceptConfirmDialogAction">
+</app-confirm-dialog>

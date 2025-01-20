@@ -14,7 +14,7 @@ export class AuthService {
     user: User | undefined;
 
     private url: string = environment.apiBaseUrl + '/users';
-    logoutHref = "https://eu-north-1fg2yyzfrc.auth.eu-north-1.amazoncognito.com/logout?client_id=1s6o9ut1ajuqqbenev2k0i5r3m&logout_uri=http://localhost:4200/logout";
+    logoutHref: string = environment.logoutHref;
 
     constructor(private oidcSecurityService: OidcSecurityService, private httpClient: HttpClient) { }
 

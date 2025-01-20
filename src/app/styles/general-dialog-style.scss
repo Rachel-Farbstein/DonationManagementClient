@@ -13,6 +13,7 @@ app-donors {
 .p-component {
     font-family: 'Assistant', sans-serif !important;
     letter-spacing: 0.02em;
+    direction: rtl;
 }
 
 /* p-fieldset scss:*/
@@ -49,6 +50,12 @@ app-donors {
         text-align: right;
         width: fit-content;
     }
+
+    .td-column-btn {
+        padding-left: 14px;
+        padding-right: 1px;
+        width: 26px;
+    }
 }
 
 p-paginator {
@@ -71,4 +78,48 @@ p-paginator {
 
 .p-toast {
     direction: rtl;
+}
+
+/* edit forms scss:*/
+.edit-form-container {
+
+    direction: rtl;
+    margin-bottom: 2rem;
+
+    .form-field-container {
+        margin: 0 auto 16px auto;
+
+        >label {
+            display: block;
+        }
+
+        >input {
+            width: 100%;
+        }
+
+        >textarea {
+            width: 100%;
+        }
+
+        >p-calendar {
+            width: 100%;
+        }
+
+        .p-calendar {
+            width: 100%;
+        }
+
+        .p-dropdown {
+            width: 100%;
+        }
+
+        .p-fileupload {
+            text-align: center;
+
+            .p-button {
+                margin: auto;
+                direction: ltr
+            }
+        }
+    }
 }

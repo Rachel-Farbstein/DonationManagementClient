@@ -1,27 +1,27 @@
-<form [formGroup]="donorDetailsForm" class="donor-form-container">
+<form [formGroup]="donorForm" class="edit-form-container">
 
     <div class="field form-field-container">
         <label for="fullName">שם</label>
-        <input type="text" pInputText id="fullName" [(ngModel)]="donor.fullName" formControlName="fullNameControl" />
-        <small class="p-error" *ngIf="submitted && !fullNameControl.value">
+        <input type="text" pInputText id="fullName" formControlName="fullName" />
+        <small class="p-error" *ngIf="donorForm.get('fullName')?.dirty && donorForm.get('fullName')?.invalid">
             שם שדה חובה
         </small>
     </div>
     <div class="field form-field-container">
         <label for="email">מייל</label>
-        <input type="email" pInputText id="email" [(ngModel)]="donor.email" formControlName="emailControl" />
-        <small class="p-error" *ngIf="(emailControl.invalid && emailControl.value)">
+        <input type="email" pInputText id="email" formControlName="email" />
+        <small class="p-error" *ngIf="donorForm.get('email')?.dirty && donorForm.get('email')?.invalid">
             כתובת מייל אינה חוקית
         </small>
     </div>
     <div class="field form-field-container">
         <label for="address">כתובת</label>
-        <input type="text" pInputText id="address" [(ngModel)]="donor.address" formControlName="addressControl" />
+        <input type="text" pInputText id="address" formControlName="address" />
     </div>
     <div class="field form-field-container">
         <label for="phone">טלפון</label>
-        <input type="phone" pInputText id="phone" [(ngModel)]="donor.phone" formControlName="phoneControl" />
-        <small class="p-error" *ngIf="(phoneControl.invalid && phoneControl.value)">
+        <input type="phone" pInputText id="phone" formControlName="phone" />
+        <small class="p-error" *ngIf="donorForm.get('phone')?.dirty && donorForm.get('phone')?.invalid">
             מספר טלפון אינו תקין
         </small>
     </div>
@@ -31,8 +31,8 @@
     <button pButton pRipple (click)="cancel()" pTooltip="ביטול" tooltipPosition="bottom">
         <i class="pi pi-times"></i>
     </button>
-    <button pButton pRipple (click)="saveDonor()" pTooltip="שמור" tooltipPosition="bottom"
-        [disabled]="donorDetailsForm.invalid">
+    <button pButton pRipple (click)="saveDonor()" [disabled]="donorForm.invalid" pTooltip="שמור"
+        tooltipPosition="bottom">
         <i class="pi pi-check"></i>
     </button>
 </div>

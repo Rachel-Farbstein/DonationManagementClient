@@ -1,14 +1,12 @@
 <p-toast position="bottom-right" />
 <div class="app-donors-contaner">
-    <p-fieldset legend="פרטי תורמים">
+    <p-fieldset legend="תורמים">
         <div class="buttons-top-left">
             <p-button icon="pi pi-user-plus" (onClick)="openDonorForm()" pTooltip="הוספת תורם"
                 tooltipPosition="bottom" />
             <p-button icon="pi pi-trash" [disabled]="!selectedDonors?.length" (onClick)="confirmDeleteSelDonors()"
                 pTooltip="מחיקת תורמים" tooltipPosition="bottom" />
         </div>
-
-        <!-- <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" /> -->
 
         <p-table [value]="donorList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
             [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"

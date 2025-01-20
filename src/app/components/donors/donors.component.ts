@@ -1,8 +1,7 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Donor } from '../../models/donor.interface';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { DonorsService } from 'src/app/services/donors.service';
-import { Message } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmDialogModel } from 'src/app/models/confirm-dialog-model';
 import { DonorFormComponent } from './donor-form/donor-form.component';
@@ -17,7 +16,6 @@ export class DonorsComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private donorService: DonorsService,
     private dialogService: DialogService
   ) { }
@@ -29,9 +27,7 @@ export class DonorsComponent implements OnInit {
   rows = 5;
   metaKey: boolean = true;
   selectedDonors?: Donor[] | null;
-  donorDialog: boolean = false;
   donor!: Donor;
-  submitted: boolean = false;
   messages: Message[] = [];
   deleteConfirmDialogData: ConfirmDialogModel = {
   }
@@ -74,7 +70,16 @@ export class DonorsComponent implements OnInit {
             detail: 'תורם נשמר בהצלחה',
             life: 3000
           })
-      ));
+      ),
+        error => (
+          this.messageService.add(
+            {
+              severity: 'error',
+              summary: 'נכשל',
+              detail: error,
+              life: 3000
+            })
+        ));
   }
 
   editDonor(donor: Donor) {
@@ -133,6 +138,7 @@ export class DonorsComponent implements OnInit {
     let selectedIds = this.selectedDonors?.map(donor => donor.donorId);
     this.donorService.deleteDonors(selectedIds).subscribe({
       next: () => {
+        this.selectedDonors = [];
         this.messageService.add({ severity: 'success', summary: 'נמחק', detail: 'תורמים נמחקו בהצלחה', life: 3000 });
       },
       error: (err) => {

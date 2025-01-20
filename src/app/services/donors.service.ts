@@ -55,13 +55,6 @@ export class DonorsService {
     );;
   }
 
-  removeDonors(donorIds: number[] | undefined): Promise<any> {
-    return firstValueFrom(this.httpClient.post(this.url + '/delete-donors', donorIds).pipe(
-      tap(() => {
-        this.getDonors();
-      })
-    ));
-  }
 
   editDonor(donor: Donor): Observable<Donor> {
     return this.httpClient.put<Donor>(this.url + '/' + donor.donorId, donor).pipe(
