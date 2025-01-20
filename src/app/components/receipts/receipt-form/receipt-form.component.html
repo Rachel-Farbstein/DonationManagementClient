@@ -1,0 +1,52 @@
+<form [formGroup]="receiptForm" class="edit-form-container">
+
+    <div class="field form-field-container">
+        <label for="donationId">מספר תרומה</label>
+        <p-dropdown id="donationId" [options]="donationIdsList" formControlName="donationId"
+            placeholder="בחר מספר תרומה">
+            <ng-template let-options pTemplate="empty">
+                <div *ngIf="donationsLoading; else noResults">
+                    <p-progressBar mode="indeterminate" [style]="{ height: '5px' }"></p-progressBar>
+                </div>
+                <ng-template #noResults>
+                    <span>אין תוצאות</span>
+                </ng-template>
+            </ng-template>
+        </p-dropdown>
+
+        <small class="p-error" *ngIf="receiptForm.get('donationId')?.dirty && receiptForm.get('donationId')?.invalid">
+            מספר תרומה שדה חובה
+        </small>
+    </div>
+
+    <div class="field form-field-container">
+        <label for="productionDate">תאריך הפקה</label>
+        <p-calendar inputId="productionDate" formControlName="productionDate" [dateFormat]="'dd-mm-yy'"
+            appendTo="body"></p-calendar>
+        <small class="p-error"
+            *ngIf="receiptForm.get('productionDate')?.dirty && receiptForm.get('productionDate')?.invalid">
+            תאריך הפקה שדה חובה
+        </small>
+    </div>
+
+    <div class="field form-field-container">
+        <label for="file">קבלה</label>
+        <p-fileUpload name="file" inputId="file" [customUpload]="true" chooseLabel="בחר קובץ"
+            (uploadHandler)="onFileUpload($event)" (onRemove)="removeFile()" [auto]="true" [multiple]="false"
+            accept=".pdf,.img"></p-fileUpload>
+        <small class="p-error" *ngIf="receiptForm.get('file')?.invalid">
+            לא נבחר קובץ
+        </small>
+    </div>
+
+</form>
+
+<div class="dialog-footer-buttons">
+    <button pButton pRipple (click)="cancel()" pTooltip="ביטול" tooltipPosition="bottom">
+        <i class="pi pi-times"></i>
+    </button>
+    <button pButton pRipple (click)="saveReceipt()" pTooltip="שמור" tooltipPosition="bottom"
+        [disabled]="receiptForm.invalid">
+        <i class="pi pi-check"></i>
+    </button>
+</div>

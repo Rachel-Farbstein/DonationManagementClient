@@ -1,6 +1,5 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
@@ -40,6 +39,14 @@ import { DonationFormComponent } from './components/donations/donation-form/dona
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DonorFormComponent } from './components/donors/donor-form/donor-form.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { CalendarModule } from 'primeng/calendar';
+import { PaymentTypeLabelPipe } from './pipes/paymentType/payment-type-label.pipe';
+import { DatePipe } from '@angular/common';
+import { ReceiptFormComponent } from './components/receipts/receipt-form/receipt-form.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   primeNGConfig.ripple = true;
@@ -61,6 +68,8 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     DonationFormComponent,
     ConfirmDialogComponent,
     DonorFormComponent,
+    PaymentTypeLabelPipe,
+    ReceiptFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,11 +95,17 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     SidebarModule,
     OverlayPanelModule,
     AuthConfigModule,
+    InputTextareaModule,
+    ProgressSpinnerModule,
+    ProgressBarModule,
+    CalendarModule,
+    FileUploadModule
   ],
   providers: [
     ConfirmationService,
     DialogService,
     AuthService,
+    DatePipe,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeAppFactory,
@@ -105,6 +120,7 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   ],
 
   bootstrap: [AppComponent],
+  exports: [PaymentTypeLabelPipe],
 
 })
 export class AppModule { }

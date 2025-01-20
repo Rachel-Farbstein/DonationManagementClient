@@ -15,65 +15,57 @@
     width: 26px;
 }
 
-.dialog-field>label {
-    padding-right: 3px;
-}
+// p-confirmdialog {
+//     direction: rtl;
+// }
 
-.dialog-field>input {
-    margin-top: 4px;
-}
+// .confirm-delete-dialog-container {
+//     border-radius: var(--border-radius);
+//     padding: 2rem;
+//     align-items: center;
+//     background-color: var(--surface-overlay);
+//     justify-content: center;
+//     display: grid;
+//     color: var(--primary-color);
+//     width: fit-content;
+// }
 
-p-confirmdialog {
-    direction: rtl;
-}
+// .confirm-delete-dialog-i-contain {
+//     align-items: center;
+//     justify-content: center;
+//     color: var(--primary-color-text);
+//     background-color: var(--primary-color);
+//     box-sizing: border-box;
+//     border-radius: 50%;
+//     width: 6rem;
+//     height: 6rem;
+//     text-align: center;
+//     display: inline-flex;
+//     margin: 10px auto;
+// }
 
-.confirm-delete-dialog-container {
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    align-items: center;
-    background-color: var(--surface-overlay);
-    justify-content: center;
-    display: grid;
-    color: var(--primary-color);
-    width: fit-content;
-}
+// .confirm-delete-dialog-i-contain>i {
+//     color: var(--surface-overlay);
+//     font-size: 2.5rem;
+//     margin: auto;
+// }
 
-.confirm-delete-dialog-i-contain {
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color-text);
-    background-color: var(--primary-color);
-    box-sizing: border-box;
-    border-radius: 50%;
-    width: 6rem;
-    height: 6rem;
-    text-align: center;
-    display: inline-flex;
-    margin: 10px auto;
-}
+// .confirm-delete-dialog-container>span {
+//     font-weight: 700;
+//     display: block;
+//     font-size: 1.5rem;
+//     text-align: center;
+// }
 
-.confirm-delete-dialog-i-contain>i {
-    color: var(--surface-overlay);
-    font-size: 2.5rem;
-    margin: auto;
-}
+// .confirm-delete-dialog-btn {
+//     float: left;
+//     margin: auto 5px;
+//     width: fit-content;
+// }
 
-.confirm-delete-dialog-container>span {
-    font-weight: 700;
-    display: block;
-    font-size: 1.5rem;
-    text-align: center;
-}
-
-.confirm-delete-dialog-btn {
-    float: left;
-    margin: auto 5px;
-    width: fit-content;
-}
-
-.confirm-delete-dialog-container>p {
-    margin-bottom: 2rem;
-}
+// .confirm-delete-dialog-container>p {
+//     margin-bottom: 2rem;
+// }
 
 .msg-action {
     position: absolute;

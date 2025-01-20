@@ -17,4 +17,6 @@ export const environment = {
         redirectUri: 'http://localhost:4200/'
     },
     apiBaseUrl: 'https://localhost:44387/api',
+    logoutHref: "https://eu-north-1fg2yyzfrc.auth.eu-north-1.amazoncognito.com/logout?client_id=1s6o9ut1ajuqqbenev2k0i5r3m&logout_uri=http://localhost:4200/logout",
+
 };

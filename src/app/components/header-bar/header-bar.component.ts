@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { FileUploadService } from 'src/app/services/fileUpload.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -10,28 +10,16 @@ import { FileUploadService } from 'src/app/services/fileUpload.service';
 })
 export class HeaderBarComponent {
 
-  selectedFile: File | null = null;
+  userData$: Observable<any>;
 
-  constructor(private authService: AuthService, private fileUploadService: FileUploadService) { }
+  constructor(private authService: AuthService, private oidcSecurityService: OidcSecurityService) {
+    this.userData$ = this.oidcSecurityService.userData$;
+  }
 
   logout() {
     this.authService.logout();
   }
 
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.selectedFile = input.files[0];
-    }
-  }
 
-  uploadFile() {
-    if (this.selectedFile) {
-      this.fileUploadService.uploadFile(this.selectedFile).subscribe({
-        next: (response) => console.log('File uploaded successfully:', response),
-        error: (err) => console.error('File upload failed:', err),
-      });
-    }
-  }
 
 }
