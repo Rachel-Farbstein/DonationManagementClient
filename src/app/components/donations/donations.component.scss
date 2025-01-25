@@ -3,3 +3,24 @@
     padding-right: 1px;
     width: 26px;
 }
+
+.file-overlay-container {
+    color: var(--primary-color);
+
+    >span {
+        font-size: 2rem;
+    }
+}
+
+.file-overlay-btns {
+
+    >button {
+        background: none;
+        border: none;
+
+        >i {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+    }
+}

@@ -9,33 +9,26 @@
     <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" />
 
     <p-table [value]="receiptsList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
-        [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"
+        [resizableColumns]="true" columnResizeMode="expand" sortField="receiptDto.receiptId" [sortOrder]="1"
         selectionMode="multiple" [(selection)]="selectedReceipts" [metaKeySelection]="metaKey"
-        dataKey="donation.donationId" [globalFilterFields]="['fullName', 'email', 'address', 'phon']"
-        [scrollable]="true" scrollHeight="400px">
+        dataKey="receiptDto.receiptId" [scrollable]="true" scrollHeight="400px">
 
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th class="th-columName">
                     <p-tableHeaderCheckbox />
                 </th>
-                <th pSortableColumn="receiptId" class="th-columName">
+                <th pSortableColumn="receiptDto.receiptId" class="th-columName">
                     מספר קבלה
-                    <p-sortIcon field="receiptId" />
-                    <p-columnFilter type="number" field="receiptId" display="menu" [showMatchModes]="false"
-                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                    <p-sortIcon field="receiptDto.receiptId" />
                 </th>
-                <th pSortableColumn="donationId" class="th-columName">
+                <th pSortableColumn="receiptDto.donationId" class="th-columName">
                     מספר תרומה
-                    <p-sortIcon field="donationId" />
-                    <p-columnFilter type="number" field="donationId" display="menu" [showMatchModes]="false"
-                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                    <p-sortIcon field="receiptDto.donationId" />
                 </th>
-                <th pSortableColumn="receiptProductionDate" class="th-columName">
+                <th pSortableColumn="receiptDto.receiptProductionDate" class="th-columName">
                     תאריך הפקה
-                    <p-sortIcon field="receiptProductionDate" />
-                    <p-columnFilter type="date" field="receiptProductionDate" display="menu" [showMatchModes]="false"
-                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                    <p-sortIcon field="receiptDto.receiptProductionDate" />
                 </th>
                 <th class="th-columName">
                     קובץ
@@ -53,11 +46,11 @@
                 <td class="th-columName">
                     <p-tableCheckbox [value]="receipt" />
                 </td>
-                <td class="th-columName">{{ receipt.receiptId }}</td>
-                <td class="th-columName">{{ receipt.donationId }}</td>
-                <td class="th-columName">{{ receipt.receiptProductionDate |date: 'dd/MM/yyyy' }}</td>
+                <td class="th-columName">{{ receipt.receiptDto.receiptId }}</td>
+                <td class="th-columName">{{ receipt.receiptDto.donationId }}</td>
+                <td class="th-columName">{{ receipt.receiptDto.receiptProductionDate |date: 'dd/MM/yyyy' }}</td>
                 <td class="th-columName">
-                    <p-button icon="pi pi-file" (onClick)="showFile(receipt)" size="small" pTooltip="צפייה"
+                    <p-button icon="pi pi-file" (onClick)="previewFile(receipt)" size="small" pTooltip="צפייה"
                         tooltipPosition="bottom" />
                 </td>
                 <td class="th-columName td-column-btn">

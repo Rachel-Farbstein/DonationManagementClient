@@ -1,4 +1,5 @@
 import { Donor } from "./donor.interface"
+import { FileDetails } from "./fileDetails-interface";
 
 export interface Donation {
     donationId: number,
@@ -11,7 +12,8 @@ export interface Donation {
 
 export interface DonationWithDonorNameDto {
     donation: Donation,
-    donorName: string
+    donorName: string,
+    fileDetails: FileDetails
 }
 
 export enum PaymentType {

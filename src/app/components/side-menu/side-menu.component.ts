@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-side-menu',
@@ -9,7 +8,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class SideMenuComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor() {
 
   }
 
@@ -47,12 +46,4 @@ export class SideMenuComponent implements OnInit {
     this.toggleMenu.emit(this.isCollapsed);
   }
 
-  // navigateTo(route: string): void {
-  //   this.router.navigate([route]); // Navigate using Angular Router
-  //   // this.router.navigate(['dashboard', route]);
-  // }
-
-  // isActive(route: string): boolean {
-  //   return this.router.url === route;
-  // }
 }

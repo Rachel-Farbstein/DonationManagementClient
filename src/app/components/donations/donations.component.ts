@@ -7,6 +7,7 @@ import { DonationFormComponent } from './donation-form/donation-form.component';
 import { ConfirmDialogModel } from 'src/app/models/confirm-dialog-model';
 import { formatDate } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-donations',
@@ -32,13 +33,25 @@ export class DonationsComponent implements OnInit {
       paymentType: PaymentType.BankTransfer,
       notes: ''
     },
-    donorName: ''
+    donorName: '',
+    fileDetails: {
+      fileId: 0,
+      fileName: '',
+      s3FileKey: '',
+      s3FileUrl: '',
+      s3BucketName: '',
+      contentType: '',
+      fileSize: '',
+      uploadedAt: new Date(),
+      isDeleted: false
+    }
   };
 
   selectedDonations: DonationWithDonorNameDto[] = [];
   donationList: DonationWithDonorNameDto[] = [];
   rows = 5;
   metaKey: boolean = true;
+  fileText?: string;
 
   //Confirm Dialog Data:
   showConfirmDialog: boolean = false;
@@ -147,5 +160,18 @@ export class DonationsComponent implements OnInit {
       }
     });
   }
+
+  openReceiptForm(event: Event, donationWithDonorName: DonationWithDonorNameDto, op: OverlayPanel) {
+    this.donationWithDonorName = donationWithDonorName;
+    if (this.donationWithDonorName.fileDetails) {
+      this.fileText = this.donationWithDonorName.fileDetails.fileName;
+    }
+    else {
+      this.fileText = "לא קיים קובץ";
+    }
+
+    op.toggle(event);
+  }
+
 }
 
