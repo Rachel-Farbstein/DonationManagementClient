@@ -18,10 +18,10 @@
                 <th class="th-columName">
                     <p-tableHeaderCheckbox />
                 </th>
-                <th pSortableColumn="donationId" class="th-columName">
+                <th pSortableColumn="donation.donationId" class="th-columName">
                     מספר תרומה
-                    <p-sortIcon field="donationId" />
-                    <p-columnFilter type="number" field="donationId" display="menu" [showMatchModes]="false"
+                    <p-sortIcon field="donation.donationId" />
+                    <p-columnFilter type="number" field="donation.donationId" display="menu" [showMatchModes]="false"
                         matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
                 <th pSortableColumn="donorName" class="th-columName">
@@ -30,29 +30,32 @@
                     <p-columnFilter type="text" field="donorName" display="menu" [showMatchModes]="false"
                         matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
-                <th pSortableColumn="donationDate" class="th-columName">
+                <th pSortableColumn="donation.donationDate" class="th-columName">
                     התקבל בתאריך
-                    <p-sortIcon field="donationDate" />
-                    <p-columnFilter type="date" field="donationDate" display="menu" [showMatchModes]="false"
-                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                    <p-sortIcon field="donation.donationDate" />
+                    <!-- <p-columnFilter type="date" field="donation.donationDate" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" /> -->
                 </th>
-                <th pSortableColumn="amount" class="th-columName">
+                <th pSortableColumn="donation.amount" class="th-columName">
                     סכום
-                    <p-sortIcon field="amount" />
-                    <p-columnFilter type="text" field="amount" display="menu" [showMatchModes]="false"
-                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                    <p-sortIcon field="donation.amount" />
+                    <!-- <p-columnFilter type="text" field="donation.amount" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" /> -->
                 </th>
-                <th pSortableColumn="paymentType" class="th-columName">
+                <th pSortableColumn="donation.paymentType" class="th-columName">
                     נתרם באמצעות
-                    <p-sortIcon field="paymentType" />
-                    <p-columnFilter type="text" field="paymentType" display="menu" [showMatchModes]="false"
+                    <p-sortIcon field="donation.paymentType" />
+                    <!-- <p-columnFilter type="text" field="donation.paymentType" display="menu" [showMatchModes]="false"
+                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" /> -->
+                </th>
+                <th pSortableColumn="donation.notes" class="th-columName">
+                    הערות
+                    <p-sortIcon field="donation.notes" />
+                    <p-columnFilter type="text" field="donation.notes" display="menu" [showMatchModes]="false"
                         matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
                 </th>
-                <th pSortableColumn="notes" class="th-columName">
-                    הערות
-                    <p-sortIcon field="notes" />
-                    <p-columnFilter type="text" field="notes" display="menu" [showMatchModes]="false"
-                        matchMode="contains" [showOperator]="false" [showButtons]="false" [showAddButton]="false" />
+                <th class="th-columName td-column-btn">
+                    קבלה
                 </th>
                 <th class="th-columName td-column-btn">
                     <p-button hidden="true"></p-button>
@@ -74,6 +77,12 @@
                 <td class="th-columName">{{ donationWithDonorName.donation.paymentType | paymentTypeLabel }}</td>
                 <td class="th-columName">{{ donationWithDonorName.donation.notes }}</td>
                 <td class="th-columName td-column-btn">
+                    <p-button icon="pi pi-file-plus" [rounded]="false" [outlined]="false" size="small"
+                        (onClick)="openReceiptForm($event,donationWithDonorName, op)" pTooltip="קבלה"
+                        tooltipPosition="bottom" />
+                    <!-- <i pRipple class="pi pi-file-plus"></i> -->
+                </td>
+                <td class="th-columName td-column-btn">
                     <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
                         (onClick)="openDonationForm(donationWithDonorName)" size="small" pTooltip="עריכה"
                         tooltipPosition="bottom" />
@@ -91,3 +100,24 @@
 <app-confirm-dialog [visible]="showConfirmDialog" [data]="deleteConfirmDialogData" (accept)="onAcceptConfirmDialog()"
     (reject)="onRejectConfirmDialog()" [onAcceptAction]="onAcceptConfirmDialogAction">
 </app-confirm-dialog>
+
+<p-overlayPanel #op>
+    <div class="file-overlay-container">
+        <span>{{fileText}}</span>
+        <div class="file-overlay-btns">
+            <button pRipple>
+                <i class="pi pi-eye"></i>
+            </button>
+            <button pRipple>
+                <i class="pi pi-file-edit"></i>
+            </button>
+            <button pRipple>
+                <i class="pi pi-trash"></i>
+            </button>
+            <!-- <button pButton type="button" label="View File" icon="pi pi-eye" (click)="onRejectConfirmDialog()"></button>
+        <button pButton type="button" label="Change File" icon="pi pi-pencil"
+            (click)="onRejectConfirmDialog()"></button>
+        <button pButton type="button" label="Delete File" icon="pi pi-trash" (click)="onRejectConfirmDialog()"></button> -->
+        </div>
+    </div>
+</p-overlayPanel>

@@ -20,21 +20,22 @@
     </div>
 
     <div class="field form-field-container">
-        <label for="productionDate">תאריך הפקה</label>
-        <p-calendar inputId="productionDate" formControlName="productionDate" [dateFormat]="'dd-mm-yy'"
+        <label for="receiptProductionDate">תאריך הפקה</label>
+        <p-calendar inputId="receiptProductionDate" formControlName="receiptProductionDate" [dateFormat]="'dd-mm-yy'"
             appendTo="body"></p-calendar>
         <small class="p-error"
-            *ngIf="receiptForm.get('productionDate')?.dirty && receiptForm.get('productionDate')?.invalid">
+            *ngIf="receiptForm.get('receiptProductionDate')?.dirty && receiptForm.get('receiptProductionDate')?.invalid">
             תאריך הפקה שדה חובה
         </small>
     </div>
 
     <div class="field form-field-container">
         <label for="file">קבלה</label>
-        <p-fileUpload name="file" inputId="file" [customUpload]="true" chooseLabel="בחר קובץ"
+        <p *ngIf="fileLoading">טוען קובץ...</p>
+        <p-fileUpload *ngIf="!fileLoading" name="file" inputId="file" [customUpload]="true" chooseLabel="בחר קובץ"
             (uploadHandler)="onFileUpload($event)" (onRemove)="removeFile()" [auto]="true" [multiple]="false"
             accept=".pdf,.img"></p-fileUpload>
-        <small class="p-error" *ngIf="receiptForm.get('file')?.invalid">
+        <small class="p-error" *ngIf="!fileLoading && receiptForm.get('file')?.invalid">
             לא נבחר קובץ
         </small>
     </div>

@@ -31,7 +31,18 @@ export class DonationFormComponent implements OnInit {
       paymentType: PaymentType.BankTransfer,
       notes: ''
     },
-    donorName: ''
+    donorName: '',
+    fileDetails: {
+      fileId: 0,
+      fileName: '',
+      s3FileKey: '',
+      s3FileUrl: '',
+      s3BucketName: '',
+      contentType: '',
+      fileSize: '',
+      uploadedAt: new Date(),
+      isDeleted: false
+    }
   };
 
 

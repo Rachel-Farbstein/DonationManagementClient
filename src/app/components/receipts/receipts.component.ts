@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReceiptFormComponent } from './receipt-form/receipt-form.component';
-import { Receipt } from 'src/app/models/receipt.interface';
+import { Receipt, ReceiptAndFileDetails } from 'src/app/models/receipt.interface';
 import { MessageService } from 'primeng/api';
 import { ReceiptService } from 'src/app/services/receipt.service';
+import { FileS3Service } from 'src/app/services/fileS3.service';
 
 @Component({
   selector: 'app-receipts',
@@ -17,6 +18,7 @@ export class ReceiptsComponent implements OnInit {
     private dialogService: DialogService,
     private messageService: MessageService,
     private receiptService: ReceiptService,
+    private fileS3Service: FileS3Service,
   ) { }
 
 
@@ -25,37 +27,38 @@ export class ReceiptsComponent implements OnInit {
     donationId: 0,
     file: undefined,
     receiptProductionDate: new Date()
-
   }
 
-  receiptsList: Receipt[] = [];
-  selectedReceipts: Receipt[] = [];
-  selectedFile: File | null = null;
+  receiptsList: ReceiptAndFileDetails[] = [];
+  selectedReceipts: ReceiptAndFileDetails[] = [];
   rows = 5;
   metaKey: boolean = true;
 
+  // receiptsList: Receipt[] = [];
+  // selectedReceipts: Receipt[] = [];
+
+
   ngOnInit(): void {
-    this.receiptService.receiptList$.subscribe(receipts => {
+    this.receiptService.receipAndFiletList$.subscribe(receipts => {
       this.receiptsList = receipts;
       receipts.forEach(r => {
-        console.log('recId:', r.receiptId);
+        console.log('recId:', r.receiptDto.receiptId);
       })
     });
-    this.receiptService.getReceipts();
+    this.receiptService.getReceiptAndfileDetails();
+    // this.receiptService.getReceipts();
   }
 
-  openReceiptsForm(receipt?: Receipt) {
-    if (receipt != null)
-      console.log('openrecId:', receipt.receiptId);
+  openReceiptsForm(receiptAndFileDetails?: ReceiptAndFileDetails) {
     const ref = this.dialogService.open(ReceiptFormComponent, {
       width: '450px',
       header: 'פרטי קבלה',
-      data: { receipt }
+      data: { receiptAndFileDetails }
     });
 
     ref.onClose.subscribe((updatedReceipt) => {
       if (updatedReceipt) {
-        if (receipt) {
+        if (receiptAndFileDetails) {
           // this.editReceipt(updatedReceipt);
         }
         else {
@@ -93,12 +96,46 @@ export class ReceiptsComponent implements OnInit {
 
   }
 
+  fetchFileFromS3(receiptAndFileDetails: ReceiptAndFileDetails): void {
+    const fileKey = receiptAndFileDetails.fileDetailsDto.s3FileKey;
+    this.receiptService.getFileFromS3(receiptAndFileDetails.receiptDto.receiptId, receiptAndFileDetails.fileDetailsDto)
+      .subscribe({
+        next: (blob) => {
+          const fileURL = URL.createObjectURL(blob);
+          this.fileS3Service.addFileToCache(fileKey, fileURL);
+          this.displayFilePreview(fileURL);
+        },
+        error: (err) => {
+          console.error('Error fetching file:', err)
+        }
+
+      }
+      );
+  }
+
   deleteSelectedReceipts() {
     throw new Error('Method not implemented.');
   }
 
-  showFile(receipt: Receipt) {
-
+  previewFile(receiptAndFileDetails: ReceiptAndFileDetails): void {
+    const fileKey = receiptAndFileDetails.fileDetailsDto.s3FileKey;
+    const cachedFile = this.fileS3Service.getFileFromCache(fileKey);
+    if (cachedFile) {
+      // אם הקובץ כבר בזיכרון, השתמש בו
+      this.displayFilePreview(cachedFile);
+    } else {
+      this.fetchFileFromS3(receiptAndFileDetails);
+    }
   }
+
+  displayFilePreview(fileURL: string): void {
+    const newWindow = window.open();
+    if (newWindow) {
+      newWindow.document.write(`<iframe src="${fileURL}" frameborder="0" style="width:100%;height:100%;"></iframe>`);
+    } else {
+      alert('Unable to open preview window');
+    }
+  }
+
 
 }
