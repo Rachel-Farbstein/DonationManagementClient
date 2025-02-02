@@ -1,3 +1,6 @@
+<!-- <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" /> -->
+<p-toast position="bottom-left" />
+
 <p-fieldset legend="תרומות">
     <div class="buttons-top-left">
         <p-button icon="pi pi-plus-circle" (onClick)="openDonationForm()" pTooltip="הוספת תרומה"
@@ -5,14 +8,11 @@
         <p-button icon="pi pi-trash" [disabled]="!selectedDonations.length" (onClick)="confirmDeleteSelDonations()"
             pTooltip="מחיקת תרומות" tooltipPosition="bottom" />
     </div>
-
-    <p-messages ngClass="msg-action" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" />
-
     <p-table [value]="donationList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
         [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"
         selectionMode="multiple" [(selection)]="selectedDonations" [metaKeySelection]="metaKey"
         dataKey="donation.donationId" [globalFilterFields]="['fullName', 'email', 'address', 'phon']"
-        [scrollable]="true" scrollHeight="400px">
+        [scrollable]="true" scrollHeight="300px">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th class="th-columName">
@@ -101,23 +101,53 @@
     (reject)="onRejectConfirmDialog()" [onAcceptAction]="onAcceptConfirmDialogAction">
 </app-confirm-dialog>
 
-<p-overlayPanel #op>
-    <div class="file-overlay-container">
-        <span>{{fileText}}</span>
-        <div class="file-overlay-btns">
-            <button pRipple>
-                <i class="pi pi-eye"></i>
-            </button>
-            <button pRipple>
-                <i class="pi pi-file-edit"></i>
-            </button>
-            <button pRipple>
-                <i class="pi pi-trash"></i>
-            </button>
-            <!-- <button pButton type="button" label="View File" icon="pi pi-eye" (click)="onRejectConfirmDialog()"></button>
-        <button pButton type="button" label="Change File" icon="pi pi-pencil"
-            (click)="onRejectConfirmDialog()"></button>
-        <button pButton type="button" label="Delete File" icon="pi pi-trash" (click)="onRejectConfirmDialog()"></button> -->
+<p-overlayPanel #op (onHide)="removeFile()" [showCloseIcon]="true">
+    <div *ngIf="isFileLoading" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    <div class="op-container">
+        <div *ngIf="!fileName">
+            <div class="icon-text">
+                <i class="pi pi-file file-icon"></i>
+                <span class="no-file">לא קיים קובץ</span>
+            </div>
+            <div class="btn-con">
+                <p-button [outlined]="true" class="blue-btn" icon="pi pi-file-plus" (click)="fileInput.click()"
+                    pTooltip="העלה קובץ"></p-button>
+                <input #fileInput type="file" (change)="onFileUpload($event)" hidden />
+                <p-button [outlined]="true" class="blue-btn" icon="pi pi-save"
+                    [disabled]="donationWithDonorName.donation.file == null" (click)="saveFile($event,op)"
+                    pTooltip="שמור קובץ"></p-button>
+                <p-button [outlined]="true" class="blue-btn" icon="pi pi-trash"
+                    [disabled]="!donationWithDonorName.donation.fileId" (click)="confirmDeleteDonationFile($event,op)"
+                    pTooltip="מחק קובץ"></p-button>
+            </div>
+        </div>
+        <div *ngIf="fileName">
+            <div class="icon-text">
+                <i class="pi pi-file file-icon"></i>
+                <span pTooltip="הצג קובץ" class="file-name" (click)="viewFile()">
+                    {{fileName}}
+                </span>
+                <span pTooltip="הצג קובץ" class="file-size" (click)="viewFile()">
+                    {{fileSize}}
+                </span>
+            </div>
+            <div class="btn-con">
+                <p-button [outlined]="true" class="blue-btn" icon="pi pi-pencil" (click)="fileInput.click()"
+                    pTooltip="שנה קובץ"></p-button> <input #fileInput type="file" (change)="onFileUpload($event)"
+                    hidden />
+                <p-button icon="pi pi-save" [outlined]="true" class="blue-btn"
+                    [disabled]="donationWithDonorName.donation.file == null || !isFileChange"
+                    (click)="saveFile($event,op)" pTooltip="שמור"></p-button>
+                <p-button icon="pi pi-trash" [outlined]="true" class="blue-btn"
+                    (click)="confirmDeleteDonationFile($event,op)" pTooltip="מחק קובץ"
+                    [disabled]="!donationWithDonorName.donation.fileId">
+                </p-button>
+                <!-- <p-button icon="pi pi-email" [outlined]="true" class="blue-btn"
+                    [disabled]="donationWithDonorName.donation.file == null" (click)="saveFile($event,op)"
+                    pTooltip="שלח לתורם"></p-button> -->
+            </div>
         </div>
     </div>
 </p-overlayPanel>

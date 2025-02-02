@@ -4,16 +4,30 @@ import { FileDetails } from "./fileDetails-interface";
 export interface Donation {
     donationId: number,
     donorId: number,
+    fileId?: number,
     donationDate: Date,
     amount: number,
     paymentType: PaymentType,
-    notes?: string
+    notes?: string,
+    file?: File,
+    [key: string]: any;
 }
 
 export interface DonationWithDonorNameDto {
     donation: Donation,
     donorName: string,
-    fileDetails: FileDetails
+    fileDetails?: FileDetails
+}
+
+export interface TotalAmountMonth {
+    monthYear: string,
+    totalAmount: number
+}
+
+export interface DonorTotalAmount {
+    donorId: number,
+    donorName: string,
+    totalAmount: number
 }
 
 export enum PaymentType {

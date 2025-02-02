@@ -3,6 +3,7 @@ body {
     font-family: 'Assistant', sans-serif !important;
     letter-spacing: 0.02em;
     font-weight: 600 !important;
+    height: 100vh;
 }
 
 app-donors {
@@ -14,6 +15,10 @@ app-donors {
     font-family: 'Assistant', sans-serif !important;
     letter-spacing: 0.02em;
     direction: rtl;
+}
+
+.p-datepicker {
+    direction: ltr;
 }
 
 /* p-fieldset scss:*/
@@ -78,6 +83,10 @@ p-paginator {
 
 .p-toast {
     direction: rtl;
+
+    .p-toast-message-content {
+        gap: 15px;
+    }
 }
 
 /* edit forms scss:*/

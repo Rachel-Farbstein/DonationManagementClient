@@ -1,0 +1,26 @@
+.charts-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    .card-chart {
+        width: 50%;
+        overflow-y: auto;
+        overflow-x: auto;
+        border-radius: 10px;
+        // box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+        background-color: #ffffff;
+        padding: 1rem;
+        color: #000000;
+    }
+}
+
+.animated-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.1s ease-in-out;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.animated-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}

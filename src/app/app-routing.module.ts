@@ -8,6 +8,8 @@ import { AuthGuard } from './auth/auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
 import { DonationsComponent } from './components/donations/donations.component';
 import { ReceiptsComponent } from './components/receipts/receipts.component';
+import { MonthlyDiagramComponent } from './components/charts/monthly-diagram/monthly-diagram.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 
 const routes: Routes = [
@@ -43,6 +45,11 @@ const routes: Routes = [
         path: 'receipts',
         component: ReceiptsComponent,
         title: 'Receipts'
+      },
+      {
+        path: 'charts',
+        component: ChartsComponent,
+        title: 'Charts'
       },
     ]
   },

@@ -1,4 +1,4 @@
-<p-toast position="bottom-right" />
+<p-toast position="bottom-left" />
 <div class="app-donors-contaner">
     <p-fieldset legend="תורמים">
         <div class="buttons-top-left">
@@ -11,7 +11,7 @@
         <p-table [value]="donorList" styleClass="p-datatable-striped" [paginator]="true" [rows]="rows"
             [resizableColumns]="true" columnResizeMode="expand" sortField="fullName" [sortOrder]="1"
             selectionMode="multiple" [(selection)]="selectedDonors" [metaKeySelection]="metaKey" dataKey="donorId"
-            [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true" scrollHeight="400px"
+            [globalFilterFields]="['fullName', 'email', 'address', 'phon']" [scrollable]="true" scrollHeight="300px"
             (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
             <ng-template pTemplate="header" let-columns>
                 <tr>

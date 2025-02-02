@@ -4,23 +4,106 @@
     width: 26px;
 }
 
-.file-overlay-container {
-    color: var(--primary-color);
+.op-container {
 
-    >span {
-        font-size: 2rem;
+    background-color: aliceblue;
+    width: 300px;
+    padding: inherit;
+
+    .icon-text {
+        margin-bottom: 30px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .no-file {
+        color: red;
+    }
+
+    .file-name {
+        color: var(--primary-color);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .file-size {
+        direction: ltr;
+        color: var(--primary-color);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .file-icon {
+        font-size: 5rem;
+        color: darkgray;
+    }
+
+    .btn-con {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        font-size: smaller;
+        justify-content: center;
+
+        >button {
+            color: var(--blue-400);
+            background-color: #f3f3f3;
+            // width: 3rem;
+            font-size: x-large;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-color: var(--blue-400);
+        }
+
     }
 }
 
-.file-overlay-btns {
-
+::ng-deep .blue-btn {
     >button {
-        background: none;
-        border: none;
+        color: var(--blue-500) !important;
+        border-color: var(--blue-500) !important;
+        // padding: 1rem;
+        // width: fit-content;
 
-        >i {
-            color: var(--primary-color);
-            font-size: 2rem;
-        }
+        // >span {
+        //     font-size: 1.5rem;
+        // }
+    }
+}
+
+.loading-overlay {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }

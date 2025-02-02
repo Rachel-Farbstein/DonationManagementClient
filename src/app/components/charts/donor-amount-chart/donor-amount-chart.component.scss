@@ -1,0 +1,8 @@
+.donor-chart-container {
+    text-align: center;
+
+    .chart-only {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}

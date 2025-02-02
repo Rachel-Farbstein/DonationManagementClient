@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { Donation, DonationWithDonorNameDto } from '../models/donation.interface';
+import { Donation, DonationWithDonorNameDto, DonorTotalAmount, PaymentType, TotalAmountMonth } from '../models/donation.interface';
+import { FileDetails } from '../models/fileDetails-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +70,39 @@ export class DonationService {
         this.getDonations();
       })
     );;
+  }
+
+  addFileToDonation(donationId: number, file: File): Observable<FileDetails> {
+    const formData = new FormData();
+    const donation: Donation = {
+      donationId: donationId,
+      donorId: 0,
+      donationDate: new Date(),
+      amount: 0,
+      paymentType: PaymentType.BankTransfer,
+      file: file,
+    }
+    Object.keys(donation).forEach(key => {
+      if (key === 'donationDate') {
+        const dateStr = new Date(donation.donationDate).toISOString();
+        formData.append(key, dateStr);
+      }
+      else {
+        formData.append(key, donation[key]);
+      }
+    });
+    return this.httpClient.put<FileDetails>(`${this.url}/add-file-do-donation`, formData);
+  }
+
+  deleteDonationFile(donationId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.url}/${donationId}/delete-donation-file`);
+  }
+
+  getAmountForMonth(): Observable<TotalAmountMonth[]> {
+    return this.httpClient.get<TotalAmountMonth[]>(`${this.url}/amount-by-month`);
+  }
+
+  getAmountForDonors(): Observable<DonorTotalAmount[]> {
+    return this.httpClient.get<DonorTotalAmount[]>(`${this.url}/amount-for-donors`);
   }
 }

@@ -26,7 +26,7 @@ export class RedirectComponent {
           localStorage.setItem('jwt', token);
         });
         this.authService.setUserInfo();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard', 'charts']);
       }
       else {
         this.router.navigate(['/logout']);

@@ -20,7 +20,7 @@ export class SideMenuComponent implements OnInit {
     this.menuItems = [
       {
         label: 'בית',
-        route: ['/dashboard'],
+        route: ['/dashboard', 'charts'],
         icon: 'pi pi-home'
       },
       {

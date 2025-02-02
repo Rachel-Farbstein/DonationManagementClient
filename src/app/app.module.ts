@@ -47,6 +47,11 @@ import { PaymentTypeLabelPipe } from './pipes/paymentType/payment-type-label.pip
 import { DatePipe } from '@angular/common';
 import { ReceiptFormComponent } from './components/receipts/receipt-form/receipt-form.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { MonthlyDiagramComponent } from './components/charts/monthly-diagram/monthly-diagram.component';
+import { ChartModule } from 'primeng/chart';
+import { ChartsComponent } from './components/charts/charts.component';
+import { CardModule } from 'primeng/card';
+import { DonorAmountChartComponent } from './components/charts/donor-amount-chart/donor-amount-chart.component';
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   primeNGConfig.ripple = true;
@@ -70,6 +75,9 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     DonorFormComponent,
     PaymentTypeLabelPipe,
     ReceiptFormComponent,
+    MonthlyDiagramComponent,
+    ChartsComponent,
+    DonorAmountChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +107,9 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     ProgressSpinnerModule,
     ProgressBarModule,
     CalendarModule,
-    FileUploadModule
+    FileUploadModule,
+    ChartModule,
+    CardModule
   ],
   providers: [
     ConfirmationService,

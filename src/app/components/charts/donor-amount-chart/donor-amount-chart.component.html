@@ -1,0 +1,7 @@
+<div class="donor-chart-container">
+    <h1>סה"כ תרומות לפי תורם</h1>
+    <div class="chart-only">
+        <p-chart type="bar" [data]="donationsData" [options]="options" [plugins]="[chartDataLabels]" />
+    </div>
+    <h1>סך הכל : {{totalAmt}} ש"ח</h1>
+</div>

@@ -22,6 +22,8 @@
     "angular-auth-oidc-client": "16.0.2",
     "aws-amplify": "^6.10.2",
     "buffer": "^6.0.3",
+    "chart.js": "^4.4.7",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "crypto-browserify": "^3.12.1",
     "primeicons": "^7.0.0",
     "primeng": "^16.9.1",
