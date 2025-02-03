@@ -35,9 +35,14 @@ export class SideMenuComponent implements OnInit {
       },
       {
         label: 'קבלות',
-        route: ['/dashboard', 'receipts'],
+        route: ['/dashboard', 'receipts-files'],
         icon: 'pi pi-receipt'
-      }
+      },
+      // {
+      //   label: 'קבלות',
+      //   route: ['/dashboard', 'receipts'],
+      //   icon: 'pi pi-receipt'
+      // }
     ];
   }
 

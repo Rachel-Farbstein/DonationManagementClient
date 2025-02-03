@@ -52,6 +52,7 @@ import { ChartModule } from 'primeng/chart';
 import { ChartsComponent } from './components/charts/charts.component';
 import { CardModule } from 'primeng/card';
 import { DonorAmountChartComponent } from './components/charts/donor-amount-chart/donor-amount-chart.component';
+import { FilesReceiptsComponent } from './components/files-receipts/files-receipts.component';
 
 const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
   primeNGConfig.ripple = true;
@@ -78,6 +79,7 @@ const initializeAppFactory = (primeNGConfig: PrimeNGConfig) => () => {
     MonthlyDiagramComponent,
     ChartsComponent,
     DonorAmountChartComponent,
+    FilesReceiptsComponent,
   ],
   imports: [
     BrowserModule,

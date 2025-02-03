@@ -18,7 +18,7 @@ export class RedirectComponent {
   userData: any;
 
   ngOnInit() {
-
+    console.log('redirect');
     this.authService.isAuthenticated().subscribe(isAuthenticated => {
       if (isAuthenticated) {
         this.oidcSecurityService.getAccessToken().subscribe((token) => {

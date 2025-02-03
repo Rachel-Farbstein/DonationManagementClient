@@ -9,3 +9,10 @@ export interface FileDetails {
     uploadedAt: Date,
     isDeleted: boolean
 }
+
+export interface FileIdDonationIdDonorName {
+    fileDetails: FileDetails,
+    donationId: number,
+    donorName: string,
+    isLoading: boolean
+}

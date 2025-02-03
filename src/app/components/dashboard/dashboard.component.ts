@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onToggleMenu(isCollapsed: any) {
-    this.isMenuCollapsed = isCollapsed; // עדכון המצב לפי הערך שהגיע מהבן
+    this.isMenuCollapsed = isCollapsed;
   }
 
 }

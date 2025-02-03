@@ -1,0 +1,22 @@
+<div class="files-container">
+    <div class="file-card animated-card" *ngFor="let file of fileIdDonorNameList let i = index">
+        <div *ngIf="file.isLoading" class="loading-overlay">
+            <div class="spinner"></div>
+        </div>
+        <div class="file-name-icon">
+            <i class="pi pi-file file-icon"></i>
+            <span pTooltip="הצג קובץ" class="file-name" (click)="viewFile(file.fileDetails, i)">
+                {{file.fileDetails.fileName}}
+            </span>
+            <!-- <span pTooltip="הצג קובץ" class="file-size" (click)="viewFile()">
+                {{file.fileSize}}
+            </span> -->
+        </div>
+        <span>
+            תורם: {{file.donorName}}
+        </span>
+        <span>
+            תרומה מספר: {{file.donationId}}
+        </span>
+    </div>
+</div>

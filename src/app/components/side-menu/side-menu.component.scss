@@ -52,18 +52,18 @@
         &:hover {
             background-color: var(--surface-hover);
             opacity: 0.6;
-            color: var(--primary-color);
+            color: var(--blue-500);
+            // color: var(--primary-color);
         }
 
         &.active {
-            background-color: var(--primary-400);
-            // transform: scale(1.05); // Slight zoom effect
-            // animation: slide-in 0.1s forwards;
+            background-color: var(--blue-400);
 
             &:hover {
                 background-color: var(--surface-hover);
                 opacity: 0.5;
-                color: var(--primary-color);
+                color: var(--blue-500);
+                // color: var(--primary-color);
             }
         }
 

@@ -3,7 +3,7 @@
         (click)="logout()">
     </p-button>
     <ng-container *ngIf="userData$ | async as userInfo">
-        <span class="header-username">{{ userInfo.userData.email }} שלום
+        <span class="header-username">{{ userInfo.userData.name }} שלום
         </span>
     </ng-container>
 </div>

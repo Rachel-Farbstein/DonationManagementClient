@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   constructor(private oidcSecurityService: OidcSecurityService) { }
 
   ngOnInit(): void {
+    console.log('login component');
     this.login();
   }
 

@@ -17,4 +17,5 @@ export class FileUploadService {
         formData.append('file', file);
         return this.http.post(this.url, formData);
     }
+
 }

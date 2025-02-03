@@ -28,6 +28,7 @@ export class AuthService {
         this.oidcSecurityService.getUserData().subscribe(
             userInfo => {
                 this.userInfo = userInfo;
+                console.log('us:', userInfo);
                 this.user = {
                     id: 0,
                     cognitoUserId: userInfo.sub,
@@ -51,7 +52,7 @@ export class AuthService {
     }
 
     logout() {
-
+        console.log('logged out');
         if (window.sessionStorage) {
             window.sessionStorage.clear();
         }

@@ -10,6 +10,7 @@ import { DonationsComponent } from './components/donations/donations.component';
 import { ReceiptsComponent } from './components/receipts/receipts.component';
 import { MonthlyDiagramComponent } from './components/charts/monthly-diagram/monthly-diagram.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { FilesReceiptsComponent } from './components/files-receipts/files-receipts.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,11 @@ const routes: Routes = [
       {
         path: 'receipts',
         component: ReceiptsComponent,
+        title: 'Receipts'
+      },
+      {
+        path: 'receipts-files',
+        component: FilesReceiptsComponent,
         title: 'Receipts'
       },
       {
