@@ -24,9 +24,9 @@ export class RedirectComponent {
         this.oidcSecurityService.getAccessToken().subscribe((token) => {
           console.log('JWT Token:', token);
           localStorage.setItem('jwt', token);
+          this.authService.setUserInfo();
+          this.router.navigate(['/dashboard', 'charts']);
         });
-        this.authService.setUserInfo();
-        this.router.navigate(['/dashboard', 'charts']);
       }
       else {
         this.router.navigate(['/logout']);

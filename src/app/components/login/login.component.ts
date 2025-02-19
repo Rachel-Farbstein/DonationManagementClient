@@ -31,7 +31,9 @@ export class LoginComponent implements OnInit {
 
     this.oidcSecurityService.authorize('', {
       customParams: {
-        locale: 'he'
+        locale: 'he',
+        scope: 'openid email profile'
+
       }
     });
   }
